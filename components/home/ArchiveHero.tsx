@@ -3,6 +3,7 @@ import { useRef } from "react";
 import { motion, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import CRTMonitor from "@/components/analog/CRTMonitor";
+import { projects } from "@/lib/data";
 import ColorBars from "@/components/analog/ColorBars";
 import RecordingIndicator from "@/components/analog/RecordingIndicator";
 
@@ -97,7 +98,7 @@ export default function ArchiveHero() {
         {/* Stats */}
         <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 1.1 }} className="mt-16 md:mt-24 grid grid-cols-2 md:grid-cols-4 gap-4">
           {[
-            { label: "PROJECTS", value: "3", suffix: "TAPES" },
+            { label: "PROJECTS", value: String(projects.length), suffix: "TAPES" },
             { label: "AWARDS", value: "8", suffix: "WINS" },
             { label: "EXPERIENCE", value: "5", suffix: "RECORDS" },
             { label: "GPA", value: "3.77", suffix: "/4.00" },

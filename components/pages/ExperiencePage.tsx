@@ -40,9 +40,9 @@ export default function ExperiencePage() {
       <section className="bg-[#0d0b10] border-y border-white/[0.06] py-6">
         <dl className="max-w-6xl mx-auto px-6 flex flex-wrap gap-x-10 gap-y-3">
           {[["RECORDS", experiences.length], ["WORK", work], ["ORGANIZATIONS", orgs]].map(([k, v]) => (
-            <div key={k} className="flex items-baseline gap-3">
-              <dd className="font-display text-3xl text-[#F1E5D0] order-1">{v}</dd>
+            <div key={k} className="flex flex-row-reverse justify-end items-baseline gap-3">
               <dt className="font-tape text-[11px] tracking-[0.2em] text-[#B8ADB4]">{k}</dt>
+              <dd className="font-display text-3xl text-[#F1E5D0]">{v}</dd>
             </div>
           ))}
         </dl>

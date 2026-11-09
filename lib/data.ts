@@ -1,10 +1,80 @@
+export interface Project {
+  id: string;
+  slug: string;
+  archiveId: string;
+  title: string;
+  category: string;
+  year: string;
+  description: string;
+  longDesc?: string;
+  problem?: string;
+  solution?: string;
+  features?: string[];
+  tech: string[];
+  tags?: string[];
+  image?: string;
+  color?: string;
+  type?: string;
+  role?: string;
+  team?: string;
+  accent?: string;
+  cover?: string;
+  liveUrl?: string;
+  featured?: boolean;
+}
+
+export interface Award {
+  id: string;
+  slug: string;
+  place: string;
+  label: string;
+  title: string;
+  issuer: string;
+  date: string;
+  role: string;
+  team: string;
+  product: string;
+  desc: string;
+  photos: { src: string; caption: string }[];
+  projectSlug?: string;
+  organizer?: string;
+  eventDates?: string;
+  certificateNo?: string;
+  recipient?: string;
+}
+
 // ─── PROJECTS ────────────────────────────────────────────────────────────────
 
-export const projects = [
+export const projects: Project[] = [
+  {
+    id: "pharvia",
+    slug: "pharvia",
+    archiveId: "RSP-001",
+    title: "PHARVIA",
+    category: "Digital Innovation · Sustainability",
+    year: "2026",
+    description:
+      "Platform digital pengembalian dan pelacakan obat tidak terpakai yang menghubungkan masyarakat, apotek, mitra farmasi, dan pengelola limbah berizin.",
+    longDesc:
+      "Pharvia adalah konsep Digital Pharmaceutical Take-Back & Traceability Platform yang dirancang agar obat sisa dan kedaluwarsa dapat dikembalikan dengan lebih aman, mudah, terlacak, dan berkelanjutan. Proyek ini meraih Juara 1 Business Model Canvas di USK Pharmacy Fair 2026.",
+    problem:
+      "Obat sisa rumah tangga masih banyak dibuang bersama sampah biasa, sementara jalur pengembalian resmi nyaris tidak dipakai. Akibatnya muncul risiko lingkungan, kesehatan, dan hilangnya jejak pengelolaan pascakonsumsi.",
+    solution:
+      "Satu pengalaman digital yang menyatukan edukasi, pemindaian obat, titik pengembalian, pendaftaran setoran, insentif EcoPoint, dan konsep pelacakan.",
+    features: ["Pharvia Scan", "Pharvia Point", "Smart Drop", "EcoPoint", "Smart Pickup", "Pharvia Trace & Impact"],
+    tech: [],
+    tags: ["Digital Health", "Sustainability", "B2B2C"],
+    role: "CEO",
+    team: "Halte Terminal Corruscant · 3 members",
+    accent: "#2BD4B4",
+    cover: "/projects/pharvia/hero/mobile-showcase.webp",
+    liveUrl: "https://pharvia.vercel.app/",
+    featured: true,
+  },
   {
     id: "daging-people-hris",
     slug: "daging-people-hris",
-    archiveId: "RSP-001",
+    archiveId: "RSP-002",
     title: "DagingPeople HRIS",
     category: "Full-Stack · Sistem HR",
     year: "2025",
@@ -35,7 +105,7 @@ export const projects = [
   {
     id: "costtrack",
     slug: "costtrack",
-    archiveId: "RSP-002",
+    archiveId: "RSP-003",
     title: "CostTrack",
     category: "Capstone · Best Project",
     year: "2025",
@@ -65,7 +135,7 @@ export const projects = [
   {
     id: "tasktracker",
     slug: "tasktracker",
-    archiveId: "RSP-003",
+    archiveId: "RSP-004",
     title: "TaskTracker",
     category: "Full-Stack · TypeScript",
     year: "2024",
@@ -240,7 +310,7 @@ export const experiences = [
 
 // ─── AWARDS ───────────────────────────────────────────────────────────────────
 
-export const awards = [
+export const awards: Award[] = [
   {
     id: "award-1",
     slug: "usk-pharmacy-fair-2026",
@@ -254,10 +324,15 @@ export const awards = [
     product: "PHARVIA",
     desc: "Meraih Juara 1 di kompetisi BMC USK Pharmacy Fair 2026 (6–8 Oktober). Sebagai CEO bersama Vassell Enha Atthayya (CFO) dan Evan Octavianus Haryo Handoko (CTO), memimpin strategi bisnis dan desain model bisnis PHARVIA — ekosistem kesehatan digital yang berfokus pada pengelolaan limbah farmasi, verifikasi obat, dan pembuangan obat tidak terpakai.",
     photos: [
-      { src: "/usk/1792753521296.jpg", caption: "Winner Announcement" },
-      { src: "/usk/1792753521352.jpg", caption: "Pharvia Team" },
-      { src: "/usk/1792753522510.jpg", caption: "Sertifikat" },
+      { src: "/projects/pharvia/achievement/award-announcement.jpg", caption: "Pengumuman pemenang Juara 1 BMC" },
+      { src: "/projects/pharvia/achievement/certificate-juara-1.webp", caption: "Sertifikat Juara 1 BMC — Rizky Sandi Pratama" },
+      { src: "/projects/pharvia/team/team-halte-terminal-corruscant.jpg", caption: "Tim Halte Terminal Corruscant dengan sertifikat" },
     ],
+    projectSlug: "pharvia",
+    organizer: "Himpunan Mahasiswa Farmasi (HIMAFAR), FMIPA, Universitas Syiah Kuala",
+    eventDates: "6–8 Oktober 2026",
+    certificateNo: "101/UPF/HIMAFAR/2026",
+    recipient: "Rizky Sandi Pratama",
   },
   {
     id: "award-2",

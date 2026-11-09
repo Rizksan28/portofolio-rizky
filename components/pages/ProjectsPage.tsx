@@ -12,7 +12,9 @@ import { projects } from "@/lib/data";
 type ViewMode = "shelf" | "catalog";
 const tapeColors = ["#FF718E", "#B18BF7", "#6FC6BE", "#F5BA60"];
 const tilts = [-1.6, 1.1, -0.7, 1.4];
-const allTech = Array.from(new Set(projects.flatMap((p) => p.tech))).sort();
+const topicsOf = (p: (typeof projects)[number]) => [...p.tech, ...(p.tags ?? [])];
+const allTech = Array.from(new Set(projects.flatMap(topicsOf))).sort();
+const accentOf = (p: (typeof projects)[number], i: number) => p.accent ?? tapeColors[i % tapeColors.length];
 
 export default function ProjectsPage() {
   const [search, setSearch] = useState("");
@@ -22,13 +24,13 @@ export default function ProjectsPage() {
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
     return projects.filter((p) => {
-      const matchTech = !tech || p.tech.includes(tech);
+      const matchTech = !tech || topicsOf(p).includes(tech);
       const matchQ =
         !q ||
         p.title.toLowerCase().includes(q) ||
         p.category.toLowerCase().includes(q) ||
         p.description.toLowerCase().includes(q) ||
-        p.tech.some((t) => t.toLowerCase().includes(q));
+        topicsOf(p).some((t) => t.toLowerCase().includes(q));
       return matchTech && matchQ;
     });
   }, [search, tech]);
@@ -40,7 +42,7 @@ export default function ProjectsPage() {
       <PageHero
         channel="CH-03"
         room="Video Rental · Aisle 03"
-        kicker="Now showing · 3 tapes"
+        kicker={`Now showing · ${projects.length} tapes`}
         accent="#FF718E"
         timecode="00:03:00"
         title={<>THE PROJECT<br /><span className="text-[#FF718E]">ARCHIVE.</span></>}
@@ -64,7 +66,7 @@ export default function ProjectsPage() {
       <section className="bg-[#0d0b10] py-14 md:py-20 border-y border-white/[0.06]">
         <div className="max-w-6xl mx-auto px-6 grid gap-10 lg:grid-cols-[1.1fr_0.9fr] items-center">
           <CRTMonitor
-            label="STAFF PICK · RSP-001"
+            label={`STAFF PICK · ${pick.archiveId}`}
             osd={
               <div className="absolute inset-0 p-3 md:p-4 flex flex-col justify-between font-tape text-[11px] md:text-[13px] font-bold text-[#F1E5D0]">
                 <div className="flex justify-between"><span className="timecode text-[#6FC6BE]">PLAY ▶</span><span className="timecode">SP 00:00:14</span></div>
@@ -72,7 +74,14 @@ export default function ProjectsPage() {
               </div>
             }
           >
-            <ScreenArt slug={pick.slug} accent="#FF718E" />
+            {pick.cover ? (
+              <div className="absolute inset-0 overflow-hidden" style={{ background: `linear-gradient(135deg, #0B3A5C, #0c5560 55%, ${pick.accent ?? "#118a76"}66)` }}>
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={pick.cover} alt={`${pick.title} app screens`} width={1291} height={1700} className="absolute left-1/2 top-[3%] h-[128%] w-auto max-w-none -translate-x-1/2" />
+              </div>
+            ) : (
+              <ScreenArt slug={pick.slug} accent="#FF718E" />
+            )}
           </CRTMonitor>
 
           <div className="paper relative p-6 md:p-8 rotate-[0.8deg] shadow-[0_22px_40px_-16px_rgba(0,0,0,0.9)]">
@@ -85,7 +94,7 @@ export default function ProjectsPage() {
               <div><dt className="text-[10px] tracking-[0.2em] text-[#151319]/65">TEAM</dt><dd className="font-semibold">{pick.team}</dd></div>
             </dl>
             <div className="flex flex-wrap gap-1.5 mb-6">
-              {pick.tech.map((t) => (
+              {topicsOf(pick).map((t) => (
                 <span key={t} className="font-tape text-[11px] font-medium border border-[#151319]/40 text-[#151319] px-2 py-0.5">{t}</span>
               ))}
             </div>
@@ -130,7 +139,7 @@ export default function ProjectsPage() {
             </div>
           </div>
 
-          <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter by technology">
+          <div className="mt-6 flex flex-wrap gap-2" role="group" aria-label="Filter by technology or topic">
             <button
               onClick={() => setTech(null)}
               aria-pressed={tech === null}
@@ -168,8 +177,8 @@ export default function ProjectsPage() {
                       category={p.category}
                       archiveId={p.archiveId}
                       year={p.year}
-                      tech={p.tech}
-                      accentColor={tapeColors[i % tapeColors.length]}
+                      tech={p.tech.length ? p.tech : p.tags}
+                      accentColor={accentOf(p, i)}
                       tilt={tilts[i % tilts.length]}
                     />
                     <div className="shelf-plank -mx-4 mt-6" aria-hidden="true" />
@@ -189,11 +198,11 @@ export default function ProjectsPage() {
                   >
                     <span className="font-tape text-[12px] font-bold text-[#151319]/75">{p.archiveId}</span>
                     <span className="font-display text-[17px] text-[#151319] flex items-center gap-2">
-                      <span className="w-1.5 h-5" style={{ background: tapeColors[i % 4] }} aria-hidden="true" />{p.title}
+                      <span className="w-1.5 h-5" style={{ background: accentOf(p, i) }} aria-hidden="true" />{p.title}
                     </span>
                     <span className="font-tape text-[12px] text-[#151319]/85">{p.category}</span>
                     <span className="font-tape text-[12px] text-[#151319]/85">{p.year}</span>
-                    <span className="font-tape text-[12px] text-[#151319]/85">{p.tech.slice(0, 3).join(" / ")}</span>
+                    <span className="font-tape text-[12px] text-[#151319]/85">{topicsOf(p).slice(0, 3).join(" / ")}</span>
                     <span className="font-tape text-[12px] font-bold text-[#C22F54] md:text-right group-hover:underline">▶ PLAY</span>
                   </Link>
                 ))}

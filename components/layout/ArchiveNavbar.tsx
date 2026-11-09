@@ -16,8 +16,10 @@ const links = [
 
 export default function ArchiveNavbar() {
   const [scrolled, setScrolled] = useState(false);
-  const [open, setOpen] = useState(false);
+  const [openFor, setOpenFor] = useState<string | null>(null);
   const pathname = usePathname();
+  const open = openFor === pathname;
+  const setOpen = (v: boolean) => setOpenFor(v ? pathname : null);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 20);
@@ -26,12 +28,8 @@ export default function ArchiveNavbar() {
   }, []);
 
   useEffect(() => {
-    setOpen(false);
-  }, [pathname]);
-
-  useEffect(() => {
     if (!open) return;
-    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpen(false);
+    const onKey = (e: KeyboardEvent) => e.key === "Escape" && setOpenFor(null);
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
   }, [open]);

@@ -27,7 +27,7 @@ export default function FeaturedTapes() {
 
       <div className="max-w-6xl mx-auto px-6">
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12">
-          {projects.map((p, i) => (
+          {projects.slice(0, 3).map((p, i) => (
             <motion.div key={p.id} className="px-4 pt-6" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
               <VHSTape
                 slug={p.slug}
@@ -35,8 +35,8 @@ export default function FeaturedTapes() {
                 category={p.category}
                 archiveId={p.archiveId}
                 year={p.year}
-                tech={p.tech}
-                accentColor={colors[i % colors.length]}
+                tech={p.tech.length ? p.tech : p.tags}
+                accentColor={p.accent ?? colors[i % colors.length]}
                 tilt={[-1.4, 1, -0.6][i % 3]}
               />
               <div className="shelf-plank -mx-4 mt-6" aria-hidden="true" />

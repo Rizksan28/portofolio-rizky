@@ -1,9 +1,10 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { ArrowLeft } from "lucide-react";
+import { ArrowLeft, ArrowRight } from "lucide-react";
 import PageHero from "@/components/layout/PageHero";
 import Polaroid from "@/components/analog/Polaroid";
+import { projects } from "@/lib/data";
 
 interface Award {
   id: string;
@@ -18,6 +19,11 @@ interface Award {
   product: string;
   desc: string;
   photos: { src: string; caption: string }[];
+  projectSlug?: string;
+  organizer?: string;
+  eventDates?: string;
+  certificateNo?: string;
+  recipient?: string;
 }
 
 interface Props {
@@ -31,6 +37,7 @@ const tilts = [-2, 1.4, -0.8, 2, -1.2];
 export default function AchievementDetailPage({ award, prev, next }: Props) {
   const color = award.place === "1st" ? "#F5BA60" : award.place === "2nd" || award.place === "silver" ? "#D5D0D8" : "#6FC6BE";
   const lead = award.photos[0];
+  const related = award.projectSlug ? projects.find((p) => p.slug === award.projectSlug) : undefined;
   const rest = award.photos.slice(1);
 
   return (
@@ -61,7 +68,10 @@ export default function AchievementDetailPage({ award, prev, next }: Props) {
               ["ROLE", award.role],
               ["TEAM", award.team],
               ["PRODUCT", award.product || "—"],
-              ["DATE", award.date],
+              ["DATE", award.eventDates ?? award.date],
+              ...(award.organizer ? [["ORGANIZER", award.organizer]] : []),
+              ...(award.certificateNo ? [["CERTIFICATE NO.", award.certificateNo]] : []),
+              ...(award.recipient ? [["RECIPIENT", award.recipient]] : []),
             ].map(([k, v]) => (
               <div key={k} className="py-2.5 border-b border-dashed border-[#151319]/35">
                 <dt className="text-[10px] tracking-[0.2em] text-[#151319]/65">{k}</dt>
@@ -73,6 +83,15 @@ export default function AchievementDetailPage({ award, prev, next }: Props) {
           <div>
             <p className="font-tape text-[11px] font-bold tracking-[0.22em] mb-3" style={{ color }}>THE STORY</p>
             <p className="text-[18px] leading-[1.8] text-[#F1E5D0]/92">{award.desc}</p>
+            {related && (
+              <Link href={`/projects/${related.slug}`} className="group mt-8 flex items-center justify-between gap-4 border border-[#2BD4B4]/60 hover:border-[#F5BA60] bg-[#2BD4B4]/[0.07] p-5 transition-colors">
+                <span>
+                  <span className="block font-tape text-[11px] font-bold tracking-[0.2em] text-[#2BD4B4] mb-1">RELATED PROJECT · {related.archiveId}</span>
+                  <span className="block font-display text-[20px] text-[#F1E5D0] group-hover:text-[#F5BA60] transition-colors">{related.title}: view the case study</span>
+                </span>
+                <ArrowRight size={18} className="shrink-0 text-[#F1E5D0]" aria-hidden="true" />
+              </Link>
+            )}
           </div>
         </div>
       </section>
@@ -85,7 +104,7 @@ export default function AchievementDetailPage({ award, prev, next }: Props) {
             <div className="grid gap-x-8 gap-y-14 sm:grid-cols-2">
               {rest.map((p, i) => (
                 <motion.div key={p.src} initial={{ opacity: 0, y: 24 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true, margin: "-60px" }}>
-                  <Polaroid src={p.src} alt={p.caption} caption={p.caption} rotate={tilts[i % tilts.length]} aspect="aspect-[4/3]" />
+                  <Polaroid src={p.src} alt={p.caption} caption={p.caption} rotate={tilts[i % tilts.length]} aspect="aspect-[4/3]" fit={p.src.includes("certificate") ? "contain" : "cover"} />
                 </motion.div>
               ))}
             </div>
