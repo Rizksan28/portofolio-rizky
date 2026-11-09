@@ -1,19 +1,21 @@
 @import "tailwindcss";
-@import url("https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Inter:wght@400;500;600&display=swap");
 
 :root {
-  --background: #F8F9FD;
-  --foreground: #102047;
-  --accent: #2563EB;
-  --soft-blue: #B5C8FF;
-  --surface: #E9EEFA;
-  --muted: #64748B;
-  --white: #FFFFFF;
+  --bg-primary: #151319;
+  --bg-secondary: #211C24;
+  --bg-tertiary: #2A2430;
+  --warm-paper: #F1E5D0;
+  --tape-pink: #FF718E;
+  --analog-violet: #B18BF7;
+  --muted-teal: #6FC6BE;
+  --archive-amber: #F5BA60;
+  --muted-text: #B8ADB4;
+  --border-subtle: rgba(255, 255, 255, 0.06);
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--warm-paper);
 }
 
 * {
@@ -22,15 +24,265 @@
 
 html {
   scroll-behavior: smooth;
+  scrollbar-width: thin;
+  scrollbar-color: #B18BF7 #151319;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #151319; }
+::-webkit-scrollbar-thumb { background: #B18BF7; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #FF718E; }
+
+::selection {
+  background: #B18BF7;
+  color: #151319;
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: "Inter", sans-serif;
+  background: var(--bg-primary);
+  color: var(--warm-paper);
+  font-family: var(--font-inter), "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
 }
 
 h1, h2, h3, h4, h5, h6 {
-  font-family: "Plus Jakarta Sans", sans-serif;
+  font-family: var(--font-archivo), "Archivo Black", sans-serif;
+  font-weight: 400;
+  letter-spacing: -0.01em;
 }
+
+.font-tape {
+  font-family: var(--font-plex), "IBM Plex Mono", monospace;
+}
+.font-display {
+  font-family: var(--font-archivo), "Archivo Black", sans-serif;
+  font-weight: 400;
+}
+
+/* ── ACCESSIBILITY ────────────────────────────────────────────────── */
+:focus-visible {
+  outline: 2px solid #F5BA60;
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+.skip-link {
+  position: fixed;
+  left: 12px;
+  top: -60px;
+  z-index: 100;
+  background: #F1E5D0;
+  color: #151319;
+  padding: 10px 16px;
+  font-family: var(--font-plex), monospace;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 6px;
+  transition: top 0.15s;
+}
+.skip-link:focus { top: 12px; }
+
+/* ── GLOBAL CRT OVERLAY (static; no motion) ───────────────────────── */
+.crt-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 90;
+  pointer-events: none;
+  background:
+    radial-gradient(ellipse at center, transparent 62%, rgba(0, 0, 0, 0.32) 100%),
+    repeating-linear-gradient(0deg, rgba(0, 0, 0, 0.07) 0, rgba(0, 0, 0, 0.07) 1px, transparent 1px, transparent 3px);
+  mix-blend-mode: multiply;
+}
+
+/* ── PAPER / TAPE MATERIALS ───────────────────────────────────────── */
+.paper {
+  background-color: #F1E5D0;
+  background-image:
+    url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='p'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.7' numOctaves='3'/%3E%3CfeColorMatrix values='0 0 0 0 0.35 0 0 0 0 0.25 0 0 0 0 0.12 0 0 0 0.16 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23p)'/%3E%3C/svg%3E");
+  color: #151319;
+}
+.masking-tape {
+  background: linear-gradient(180deg, rgba(245, 186, 96, 0.82), rgba(230, 168, 78, 0.78));
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.35);
+  clip-path: polygon(0 8%, 4% 0, 8% 10%, 12% 0, 100% 0, 100% 100%, 96% 92%, 92% 100%, 88% 90%, 0 100%);
+}
+.timecode {
+  font-variant-numeric: tabular-nums;
+  text-shadow: 0 0 6px currentColor;
+}
+
+/* ── SCANLINE OVERLAY ─────────────────────────────────────────────── */
+.scanlines {
+  position: relative;
+}
+.scanlines::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 2px,
+    rgba(0, 0, 0, 0.06) 2px,
+    rgba(0, 0, 0, 0.06) 4px
+  );
+  pointer-events: none;
+  z-index: 2;
+}
+
+/* ── CRT SCREEN EFFECT ────────────────────────────────────────────── */
+.crt-screen {
+  position: relative;
+  overflow: hidden;
+  border-radius: 12px;
+}
+.crt-screen::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(ellipse at center, transparent 50%, rgba(0, 0, 0, 0.35) 100%);
+  pointer-events: none;
+  z-index: 3;
+}
+.crt-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: repeating-linear-gradient(
+    0deg,
+    transparent,
+    transparent 1px,
+    rgba(0, 0, 0, 0.04) 1px,
+    rgba(0, 0, 0, 0.04) 2px
+  );
+  pointer-events: none;
+  z-index: 4;
+}
+
+/* ── FILM GRAIN ───────────────────────────────────────────────────── */
+.film-grain {
+  position: relative;
+}
+.film-grain::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.10'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 1;
+}
+
+/* ── VHS COLOR STRIPE ─────────────────────────────────────────────── */
+.vhs-stripe {
+  background: linear-gradient(
+    90deg,
+    #FF718E 0%, #FF718E 14%,
+    #F5BA60 14%, #F5BA60 28%,
+    #6FC6BE 28%, #6FC6BE 42%,
+    #B18BF7 42%, #B18BF7 57%,
+    #FF718E 57%, #FF718E 71%,
+    #F5BA60 71%, #F5BA60 85%,
+    #6FC6BE 85%, #6FC6BE 100%
+  );
+  height: 4px;
+}
+
+/* ── LINE CLAMP ───────────────────────────────────────────────────── */
+.line-clamp-1 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; }
+.line-clamp-2 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.line-clamp-3 { overflow: hidden; display: -webkit-box; -webkit-line-clamp: 3; -webkit-box-orient: vertical; }
+
+/* ── KEYFRAMES ────────────────────────────────────────────────────── */
+@keyframes scanline-move {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+@keyframes glow-pulse {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.3; }
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0px); }
+  50% { transform: translateY(-8px); }
+}
+
+@keyframes marquee {
+  0% { transform: translateX(0); }
+  100% { transform: translateX(-50%); }
+}
+
+@keyframes vhs-flicker {
+  0%, 94%, 100% { opacity: 1; }
+  95% { opacity: 0.95; }
+  97% { opacity: 0.98; }
+}
+
+@keyframes tape-spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+@keyframes gradient-shift {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+@keyframes tracking-distort {
+  0%, 100% { transform: translateX(0); }
+  25% { transform: translateX(-1px); }
+  50% { transform: translateX(1px); }
+  75% { transform: translateX(-0.5px); }
+}
+
+@keyframes static-flicker {
+  0%, 100% { opacity: 0.02; }
+  50% { opacity: 0.04; }
+}
+
+@keyframes counter-tick {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+/* ── ANIMATION UTILITIES ──────────────────────────────────────────── */
+.animate-float { animation: float 3s ease-in-out infinite; }
+.animate-glow-pulse { animation: glow-pulse 1.5s ease-in-out infinite; }
+.animate-tape-spin { animation: tape-spin 4s linear infinite; }
+.animate-vhs-flicker { animation: vhs-flicker 4s ease-in-out infinite; }
+.animate-scanline { animation: scanline-move 6s linear infinite; }
+.animate-counter-tick { animation: counter-tick 1s ease-in-out infinite; }
+
+/* ── REDUCED MOTION ───────────────────────────────────────────────── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+  }
+}
+
+/* ── CASSETTE REELS ───────────────────────────────────────────────── */
+.group:hover .tape-reel .reel-spokes,
+.group:focus-visible .tape-reel .reel-spokes {
+  animation: tape-spin 1.2s linear infinite;
+}
+.shelf-plank {
+  height: 14px;
+  background: linear-gradient(180deg, #3a2f33 0%, #241d21 55%, #120f13 100%);
+  box-shadow: 0 10px 18px -6px rgba(0, 0, 0, 0.9), inset 0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: 2px;
+}
+.crop-marks::before, .crop-marks::after {
+  content: "";
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: rgba(241, 229, 208, 0.35);
+  border-style: solid;
+  pointer-events: none;
+}
+.crop-marks::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
+.crop-marks::after { bottom: 0; right: 0; border-width: 0 1px 1px 0; }

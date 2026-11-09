@@ -39,3 +39,18 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# AI / agent tooling
+AGENTS.md
+CLAUDE.md
+GEMINI.md
+.claude/
+.agents/
+.cursor/
+.cursorrules
+.windsurf/
+.github/copilot-instructions.md
+.aider*
+.codex/
+.mcp.json
+RSP_VHS_PROGRESS.md
