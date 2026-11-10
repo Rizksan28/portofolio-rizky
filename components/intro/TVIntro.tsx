@@ -32,6 +32,11 @@ const TICKER = "RANK S ★ ENTER THE ARCHIVE ★ RSP ARCHIVE SYSTEM ★ SIGNAL L
 
 function Screen({ v, phase }: { v: Variant; phase: Phase }) {
   const ranked = phase !== "wall";
+  // Once a tile is dimmed to the background (anything but the S tile, once
+  // ranked), its noise animation is nearly invisible at 18% opacity but still
+  // costs a full compositor layer. Skip it so the GPU only has to carry the
+  // handful of tiles that actually matter during the rank/zoom beats.
+  const dimmed = ranked && v !== "S";
   if (v === "S") {
     return (
       <div className="absolute inset-0 flex items-center justify-center bg-[#0a1424] overflow-hidden">
@@ -83,21 +88,21 @@ function Screen({ v, phase }: { v: Variant; phase: Phase }) {
     return (
       <div className="absolute inset-0 flex overflow-hidden">
         {BAR_COLORS.map((c) => <span key={c} className="flex-1" style={{ background: c }} />)}
-        <div className="tv-static opacity-25" aria-hidden="true" />
+        {!dimmed && <div className="tv-static opacity-25" aria-hidden="true" />}
       </div>
     );
   }
   if (v === "nosignal") {
     return (
       <div className="absolute inset-0 bg-[#0a0a0f] overflow-hidden">
-        <div className="tv-static opacity-55" aria-hidden="true" />
+        {!dimmed && <div className="tv-static opacity-55" aria-hidden="true" />}
         <span className="absolute inset-0 flex items-center justify-center font-tape text-[9px] md:text-[11px] font-bold tracking-[0.25em] text-[#F1E5D0]/70 animate-glow-pulse">NO SIGNAL</span>
       </div>
     );
   }
   return (
     <div className="absolute inset-0 flex items-center justify-center bg-[#0a0a0f] overflow-hidden">
-      <div className="tv-static opacity-45" aria-hidden="true" />
+      {!dimmed && <div className="tv-static opacity-45" aria-hidden="true" />}
       <div className="relative text-center">
         <p className="font-tape text-[8px] md:text-[10px] font-bold tracking-[0.3em]" style={{ color: RANK_COLOR[v] }}>RANK</p>
         <p className="font-display leading-none text-[clamp(22px,3.6vw,56px)]" style={{ color: RANK_COLOR[v] }}>{v}</p>
@@ -188,67 +193,101 @@ export default function TVIntro() {
           className="fixed inset-0 z-[85] overflow-hidden bg-[#07060a]"
           aria-label="Opening animation"
         >
-          {/* Zoom layer (scale only — stays on the GPU) */}
-          <motion.div
-            className="absolute inset-0"
-            animate={phase === "zoom" ? { scale: [1, 0.95, 14] } : { scale: 1 }}
-            transition={
-              phase === "zoom"
-                ? { duration: 1.05, times: [0, 0.22, 1], ease: ["easeInOut", [0.78, 0, 0.16, 1]] }
-                : { duration: 0 }
-            }
-            style={{ transformOrigin: "50% 50%", willChange: "transform" }}
-          >
-            {/* Shake layer — the slam when RANK S locks in */}
+          {/* Wall layer: unmounts the instant "zoom" starts, instead of being
+              dragged along into a 14×-scaled subtree — scaling 15 shadowed,
+              gradient-heavy tiles that far up is the single most expensive
+              thing a browser can be asked to rasterize, and was the actual
+              source of the lag during this transition. */}
+          <AnimatePresence>
+            {phase !== "zoom" && (
+              <motion.div
+                key="wall"
+                className="absolute inset-0"
+                exit={{ opacity: 0, scale: 0.95 }}
+                transition={{ duration: 0.16, ease: "easeIn" }}
+                style={{ willChange: "opacity, transform" }}
+              >
+                {/* Shake layer — the slam when RANK S locks in */}
+                <motion.div
+                  className="absolute inset-0 flex items-center justify-center"
+                  animate={
+                    phase === "rank"
+                      ? { x: [0, -7, 6, -4, 2, 0], y: [0, 4, -5, 3, -2, 0] }
+                      : { x: 0, y: 0 }
+                  }
+                  transition={phase === "rank" ? { duration: 0.45, delay: 0.1 } : { duration: 0.2 }}
+                >
+                  <div className="grid grid-cols-5 gap-[1.4vw] w-[210vw] sm:w-[150vw] lg:w-[115vw] shrink-0">
+                    {TVS.map((tv, i) => {
+                      const isS = tv.v === "S";
+                      return (
+                        <motion.div
+                          key={i}
+                          initial={{ opacity: 0, scaleY: 0.04, scaleX: 0.72 }}
+                          animate={{
+                            opacity: phase !== "wall" && !isS ? 0.18 : 1,
+                            scaleY: isS && phase !== "wall" ? 1.14 : 1,
+                            scaleX: isS && phase !== "wall" ? 1.14 : 1,
+                          }}
+                          transition={
+                            phase === "wall"
+                              ? { delay: tv.d, type: "spring", stiffness: 270, damping: 20 }
+                              : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
+                          }
+                          style={{ rotate: tv.rot, zIndex: isS ? 10 : 1 }}
+                          className="relative aspect-[4/3] rounded-[10px] border border-black bg-gradient-to-b from-[#2b2530] to-[#15111a] p-[5%] shadow-[0_24px_40px_-16px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,255,255,0.1)]"
+                        >
+                          <div className="relative w-full h-full rounded-[6px] overflow-hidden border border-black bg-[#0a0a0f] shadow-[inset_0_0_18px_rgba(0,0,0,0.9)]">
+                            <Screen v={tv.v} phase={phase} />
+                            {/* CRT turn-on blip */}
+                            <motion.span
+                              className="absolute inset-0 bg-white pointer-events-none"
+                              initial={{ opacity: 0 }}
+                              animate={{ opacity: [0, 0.85, 0] }}
+                              transition={{ delay: tv.d + 0.06, duration: 0.3, times: [0, 0.35, 1] }}
+                              aria-hidden="true"
+                            />
+                            <span className="absolute inset-0 pointer-events-none bg-[repeating-linear-gradient(0deg,rgba(0,0,0,0.22)_0,rgba(0,0,0,0.22)_1px,transparent_1px,transparent_3px)]" aria-hidden="true" />
+                            <span className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.5) 100%)" }} aria-hidden="true" />
+                          </div>
+                          <span className="absolute right-[7%] bottom-[1.5%] w-1.5 h-1.5 rounded-full bg-[#3AE0B0] shadow-[0_0_6px_#3AE0B0]" aria-hidden="true" />
+                        </motion.div>
+                      );
+                    })}
+                  </div>
+                </motion.div>
+              </motion.div>
+            )}
+          </AnimatePresence>
+
+          {/* Punch layer: the actual "dive into the screen" — a single plain
+              element scaling up, not an entire complex grid. Far cheaper to
+              rasterize, and the white flash + glitch below mask the handoff
+              from the wall fading out a frame earlier. */}
+          {phase === "zoom" && (
             <motion.div
-              className="absolute inset-0 flex items-center justify-center"
-              animate={
-                phase === "rank"
-                  ? { x: [0, -7, 6, -4, 2, 0], y: [0, 4, -5, 3, -2, 0] }
-                  : { x: 0, y: 0 }
-              }
-              transition={phase === "rank" ? { duration: 0.45, delay: 0.1 } : { duration: 0.2 }}
+              className="absolute inset-0 flex items-center justify-center bg-[#0a1424] overflow-hidden"
+              initial={{ opacity: 0, scale: 1.1 }}
+              animate={{ scale: 2.6, opacity: 1 }}
+              transition={{ duration: 0.95, ease: [0.74, 0, 0.3, 1] }}
+              style={{ willChange: "transform, opacity" }}
             >
-              <div className="grid grid-cols-5 gap-[1.4vw] w-[210vw] sm:w-[150vw] lg:w-[115vw] shrink-0">
-                {TVS.map((tv, i) => {
-                  const isS = tv.v === "S";
-                  return (
-                    <motion.div
-                      key={i}
-                      initial={{ opacity: 0, scaleY: 0.04, scaleX: 0.72 }}
-                      animate={{
-                        opacity: phase !== "wall" && !isS ? 0.18 : 1,
-                        scaleY: isS && phase !== "wall" ? 1.14 : 1,
-                        scaleX: isS && phase !== "wall" ? 1.14 : 1,
-                      }}
-                      transition={
-                        phase === "wall"
-                          ? { delay: tv.d, type: "spring", stiffness: 270, damping: 20 }
-                          : { duration: 0.5, ease: [0.22, 1, 0.36, 1] }
-                      }
-                      style={{ rotate: tv.rot, zIndex: isS ? 10 : 1 }}
-                      className="relative aspect-[4/3] rounded-[10px] border border-black bg-gradient-to-b from-[#2b2530] to-[#15111a] p-[5%] shadow-[0_24px_40px_-16px_rgba(0,0,0,0.95),inset_0_1px_0_rgba(255,255,255,0.1)]"
-                    >
-                      <div className="relative w-full h-full rounded-[6px] overflow-hidden border border-black bg-[#0a0a0f] shadow-[inset_0_0_18px_rgba(0,0,0,0.9)]">
-                        <Screen v={tv.v} phase={phase} />
-                        {/* CRT turn-on blip */}
-                        <motion.span
-                          className="absolute inset-0 bg-white pointer-events-none"
-                          initial={{ opacity: 0 }}
-                          animate={{ opacity: [0, 0.85, 0] }}
-                          transition={{ delay: tv.d + 0.06, duration: 0.3, times: [0, 0.35, 1] }}
-                          aria-hidden="true"
-                        />
-                        <span className="absolute inset-0 pointer-events-none bg-[repeating-linear-gradient(0deg,rgba(0,0,0,0.22)_0,rgba(0,0,0,0.22)_1px,transparent_1px,transparent_3px)]" aria-hidden="true" />
-                        <span className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse at center, transparent 58%, rgba(0,0,0,0.5) 100%)" }} aria-hidden="true" />
-                      </div>
-                      <span className="absolute right-[7%] bottom-[1.5%] w-1.5 h-1.5 rounded-full bg-[#3AE0B0] shadow-[0_0_6px_#3AE0B0]" aria-hidden="true" />
-                    </motion.div>
-                  );
-                })}
+              <span
+                className="absolute inset-0"
+                style={{ background: "radial-gradient(circle at center, rgba(245,186,96,0.55), transparent 65%)" }}
+                aria-hidden="true"
+              />
+              <div className="relative text-center">
+                <p className="font-tape text-[9px] md:text-[12px] font-bold tracking-[0.3em] text-[#F5BA60]">RANK</p>
+                <p
+                  className="font-display leading-none text-[#F5BA60] text-[clamp(40px,7vw,110px)]"
+                  style={{ textShadow: "0 0 28px rgba(245,186,96,0.95), 0 0 60px rgba(245,186,96,0.5)" }}
+                >
+                  S
+                </p>
               </div>
             </motion.div>
-          </motion.div>
+          )}
 
           {/* Scanline sweep across the whole wall */}
           {phase === "wall" && (
