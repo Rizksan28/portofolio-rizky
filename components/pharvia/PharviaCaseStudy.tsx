@@ -32,6 +32,7 @@ export default function PharviaCaseStudy() {
   const go = useCallback((id: string) => scrollToSection(id), []);
 
   const play = useCallback(() => {
+    if (loading) return;
     const reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
     if (reduce) {
       go("story");
@@ -42,7 +43,7 @@ export default function PharviaCaseStudy() {
       go("story");
       timer.current = setTimeout(() => setLoading(false), 350);
     }, 900);
-  }, [go]);
+  }, [go, loading]);
 
   return (
     <>

@@ -36,12 +36,52 @@ function DotGrid({ lit }: { lit: number }) {
   );
 }
 
+export function Story() {
+  return (
+    <motion.div {...reveal}>
+      <blockquote className="font-display text-[clamp(1.6rem,4vw,3rem)] leading-[1.05] text-[#F1E5D0] border-l-4 pl-6 md:pl-8 mb-12" style={{ borderColor: cyan }}>
+        <span style={{ color: cyan }}>&ldquo;</span>
+        {amanin.tagline}
+        <span style={{ color: cyan }}>&rdquo;</span>
+      </blockquote>
+      <div className="grid gap-10 lg:grid-cols-[1.4fr_0.6fr] items-start">
+        <div className="space-y-6 text-[17px] leading-[1.85] text-[#F1E5D0]/90">
+          {amanin.story.map((p, i) => (
+            <p
+              key={i}
+              className={i === 0 ? "first-letter:font-display first-letter:text-[4.2rem] first-letter:leading-[0.8] first-letter:float-left first-letter:mr-3 first-letter:mt-1 first-letter:text-[#38D5F3]" : ""}
+            >
+              {p}
+            </p>
+          ))}
+        </div>
+        <aside className="paper relative p-5 rotate-[1.4deg] shadow-[0_20px_36px_-14px_rgba(0,0,0,0.9)] font-tape">
+          <span className="masking-tape absolute -top-3 right-6 w-16 h-6 rotate-[4deg]" aria-hidden="true" />
+          <p className="text-[10px] font-bold tracking-[0.22em] text-[#151319]/70 mb-3">ARCHIVE CARD</p>
+          {[
+            ["TITLE", "AMANIN"],
+            ["ARCHIVE ID", amanin.archiveId],
+            ["FORMAT", "VHS · T-120 · SP"],
+            ["FILMED BY", amanin.teamName],
+            ["YEAR", amanin.year],
+          ].map(([k, v]) => (
+            <div key={k} className="flex justify-between gap-4 py-2 border-b border-dashed border-[#151319]/35 text-[12px]">
+              <span className="text-[#151319]/70">{k}</span>
+              <span className="font-semibold text-right">{v}</span>
+            </div>
+          ))}
+        </aside>
+      </div>
+      <p className="mt-12 font-tape text-[12px] text-[#B8ADB4] max-w-2xl leading-relaxed">{amanin.fullConcept}</p>
+    </motion.div>
+  );
+}
+
 export function Threat() {
   const { threat } = amanin;
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
-        <SubHead label="THE THREAT" color={red} title="EVIDENCE OF A DIGITAL CRIME WAVE." />
         <p className="text-[18px] md:text-[20px] leading-relaxed text-[#F1E5D0] max-w-3xl mb-12">{threat.intro}</p>
 
         <div className="grid gap-6 lg:grid-cols-3 lg:items-start mb-6">

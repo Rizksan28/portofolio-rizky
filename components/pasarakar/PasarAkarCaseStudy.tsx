@@ -30,6 +30,7 @@ export default function PasarAkarCaseStudy() {
   }, []);
 
   const play = useCallback(() => {
+    if (loading) return;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
       scrollToSection("story");
       return;
@@ -39,7 +40,7 @@ export default function PasarAkarCaseStudy() {
       scrollToSection("story");
       timer.current = setTimeout(() => setLoading(false), 350);
     }, 900);
-  }, []);
+  }, [loading]);
 
   return (
     <>

@@ -62,6 +62,11 @@ export const amanin = {
   cover: "AI Anti-Scam Decision Assistant",
   fullConcept:
     "Dari Penipuan menuju Perlindungan: AMANIN sebagai AI Decision Assistant untuk Deteksi Risiko, Verifikasi, dan Edukasi Keamanan Digital.",
+  story: [
+    "Penipuan digital di Indonesia bergerak lebih cepat daripada kemampuan kebanyakan orang untuk mengenalinya. Pesan kurir palsu, tautan verifikasi akun, dan QR pembayaran yang dimanipulasi selalu datang di momen yang sama: saat pengguna harus memutuskan dalam hitungan detik, bukan setelah sempat berpikir panjang.",
+    "Kesenjangan antara inklusi keuangan dan literasi keuangan di Indonesia masih lebar, dan sebagian besar alat verifikasi yang ada baru bisa dipakai setelah kerugian terjadi: melapor, bukan mencegah. Hampir tidak ada yang hadir tepat di momen pengguna ragu, sebelum mengklik, membalas, atau membayar.",
+    "AMANIN disusun oleh tim Halte Terminal Rawamangun sebagai jawaban atas celah itu: sebuah AI Decision Assistant yang membantu memeriksa pesan, tautan, screenshot, dan QR tepat sebelum keputusan diambil. Gagasan bisnisnya diuji dalam kompetisi, dan alurnya dapat dicoba lewat prototipe web.",
+  ],
   liveUrl: "https://mobile-webpage-amanin.vercel.app/",
   colors: {
     tapeBlack: "#101621",

@@ -23,6 +23,7 @@ export function BusinessModel() {
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
+        <SubHead label="BUSINESS MODEL" color={amber} title="HOW AMANIN COULD SUSTAIN ITSELF." />
 
         <div className="grid gap-5 lg:grid-cols-2 mb-5">
           <motion.div {...reveal} className="bg-[#0d1626] border border-white/15 p-6" style={{ borderTop: `4px solid ${cyan}` }}>

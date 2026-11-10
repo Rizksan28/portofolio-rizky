@@ -55,7 +55,6 @@ export function Features() {
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
-        <SubHead label="FEATURE FILES" color={cyan} title="EIGHT FILES. SIX IN THE PROTOTYPE." />
         <div className="grid gap-8 lg:grid-cols-[330px_1fr]">
           <div role="tablist" aria-label="AMANIN features" aria-orientation="vertical" className="flex lg:flex-col gap-2 overflow-x-auto lg:overflow-visible pb-2 lg:pb-0 -mx-6 px-6 lg:mx-0 lg:px-0">
             {amanin.features.map((x, i) => {
@@ -187,7 +186,7 @@ export function Experience() {
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
-        <SubHead label="PRODUCT EXPERIENCE" color={green} title="SIX STEPS FROM DOUBT TO DECISION." />
+        <SubHead label="USER JOURNEY" color={green} title="SIX STEPS FROM DOUBT TO DECISION." />
         <ol className="relative">
           <span className="absolute left-[19px] md:left-[27px] top-2 bottom-2 w-px bg-white/20" aria-hidden="true" />
           {amanin.experience.map((s, i) => {

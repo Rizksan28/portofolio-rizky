@@ -2,7 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import AmaninCassette from "@/components/amanin/AmaninCassette";
 import PasarAkarCassette from "@/components/pasarakar/PasarAkarCassette";
 import PharviaCassette from "@/components/pharvia/PharviaCassette";
@@ -47,16 +47,30 @@ export default function VHSTape({
   const custom = slug === "amanin" || slug === "pharvia" || slug === "pasarakar";
   const leftWound = 13 + (slug.length % 4);
   const rightWound = 30 - leftWound;
+  const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const safetyTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  useEffect(() => () => {
+    if (navTimer.current) clearTimeout(navTimer.current);
+    if (safetyTimer.current) clearTimeout(safetyTimer.current);
+  }, []);
 
   const onClick = (e: React.MouseEvent) => {
-    if (!custom || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    if (!custom || loading || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
     e.preventDefault();
+    const target = `/projects/${slug}`;
     if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
-      router.push(`/projects/${slug}`);
+      router.push(target);
       return;
     }
     setLoading(true);
-    setTimeout(() => router.push(`/projects/${slug}`), 650);
+    navTimer.current = setTimeout(() => router.push(target), 650);
+    // Safety net: if the route transition stalls or silently fails (flaky network,
+    // a backgrounded tab throttling timers, a route compiling for the first time),
+    // never leave the user stuck behind the full-screen overlay.
+    safetyTimer.current = setTimeout(() => {
+      window.location.href = target;
+    }, 4500);
   };
 
   return (
