@@ -1,6 +1,11 @@
 "use client";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import AmaninCassette from "@/components/amanin/AmaninCassette";
+import PasarAkarCassette from "@/components/pasarakar/PasarAkarCassette";
+import PharviaCassette from "@/components/pharvia/PharviaCassette";
 
 interface VHSTapeProps {
   slug: string;
@@ -37,20 +42,47 @@ export default function VHSTape({
   slug, title, category, archiveId, year, tech, accentColor, className = "", tilt = 0, showMeta = true,
 }: VHSTapeProps) {
   const color = accentColor || defaultColors[slug.charCodeAt(0) % defaultColors.length];
+  const router = useRouter();
+  const [loading, setLoading] = useState(false);
+  const custom = slug === "amanin" || slug === "pharvia" || slug === "pasarakar";
   const leftWound = 13 + (slug.length % 4);
   const rightWound = 30 - leftWound;
+
+  const onClick = (e: React.MouseEvent) => {
+    if (!custom || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+    e.preventDefault();
+    if (window.matchMedia("(prefers-reduced-motion: reduce)").matches) {
+      router.push(`/projects/${slug}`);
+      return;
+    }
+    setLoading(true);
+    setTimeout(() => router.push(`/projects/${slug}`), 650);
+  };
 
   return (
     <Link
       href={`/projects/${slug}`}
+      onClick={onClick}
       aria-label={`Play tape ${archiveId}: ${title}`}
       className={`group block ${className}`}
     >
+      {loading && (
+        <span role="status" className="fixed inset-0 z-[96] bg-[#07101e] flex flex-col items-center justify-center gap-5 px-6 text-center">
+          <span className="font-display text-[clamp(1.6rem,5vw,3rem)] text-[#F1E5D0]">LOADING TAPE…</span>
+          <span className="block w-64 max-w-full h-2 bg-white/15 overflow-hidden" aria-hidden="true">
+            <span className="block h-full animate-[tape-load_0.65s_linear_forwards]" style={{ background: color }} />
+          </span>
+          <span className="font-tape text-[12px] tracking-[0.22em]" style={{ color }}>▶ PLAY · {archiveId}</span>
+        </span>
+      )}
       <motion.div
         style={{ rotate: tilt }}
         whileHover={{ y: -10, rotate: 0 }}
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
+        {custom ? (
+          slug === "amanin" ? <AmaninCassette /> : slug === "pasarakar" ? <PasarAkarCassette /> : <PharviaCassette className="group-hover:shadow-[0_0_0_1px_rgba(43,212,180,0.7),0_0_30px_rgba(43,212,180,0.35)] transition-shadow" />
+        ) : (
         <div className="relative aspect-[188/104] rounded-[10px] bg-gradient-to-b from-[#26222b] to-[#14111a] shadow-[0_18px_30px_-12px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-2px_0_rgba(0,0,0,0.6)] border border-black">
           <div className="absolute inset-x-3 top-1 h-[3px] rounded-full bg-black/50" />
           {["left-1.5 top-1.5", "right-1.5 top-1.5", "left-1.5 bottom-1.5", "right-1.5 bottom-1.5"].map((pos) => (
@@ -90,6 +122,7 @@ export default function VHSTape({
             ▶ PLAY
           </div>
         </div>
+        )}
 
         {showMeta && (
           <div className="mt-4 px-1">

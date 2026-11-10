@@ -51,7 +51,7 @@ export default function AchievementDetailPage({ award, prev, next }: Props) {
         title={<span className="block text-[clamp(1.9rem,4.4vw,3.6rem)] leading-[1]">{award.title}</span>}
         sub={award.issuer}
       >
-        {lead && <Polaroid src={lead.src} alt={lead.caption} caption={lead.caption} rotate={2} aspect="aspect-[4/3]" />}
+        {lead && <Polaroid src={lead.src} alt={lead.caption} caption={lead.caption} rotate={2} aspect="aspect-[4/3]" fit={lead.src.includes("certificate") ? "contain" : "cover"} />}
       </PageHero>
 
       <section className="bg-[#0d0b10] border-y border-white/[0.06] py-14 md:py-20">

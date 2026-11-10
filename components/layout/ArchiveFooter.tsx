@@ -80,7 +80,7 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
           <div>
             <div className="flex items-center gap-3 mb-1.5">
               <div className="w-7 h-7 bg-[#F1E5D0] rounded-[4px] flex items-center justify-center">
-                <span className="text-[#151319] text-[9px] font-black tracking-tighter">RSP</span>
+                <span className="text-[#151319] text-[10px] font-black tracking-tighter">RSP</span>
               </div>
               <span className="font-tape text-[11px] font-medium text-[#B8ADB4] tracking-wider">THE ANALOG VHS ARCHIVE</span>
             </div>

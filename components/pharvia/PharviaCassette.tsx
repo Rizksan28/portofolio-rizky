@@ -15,7 +15,7 @@ export default function PharviaCassette({ className = "" }: { className?: string
       <div className="paper absolute left-[5%] right-[5%] top-[8%] h-[53%] rounded-[3px] overflow-hidden shadow-[0_1px_2px_rgba(0,0,0,0.6)]">
         <div className="absolute inset-x-0 top-0 h-[15%] bg-gradient-to-r from-[#1B7FD4] via-[#2BD4B4] to-[#6EDC7C]" aria-hidden="true" />
         <div className="absolute inset-x-[5%] top-[22%] bottom-[7%] flex flex-col justify-between">
-          <div className="flex items-center justify-between font-tape font-bold tracking-[0.14em] text-[#151319]/75" style={{ fontSize: "max(8px, 2.8cqw)" }}>
+          <div className="flex items-center justify-between font-tape font-bold tracking-[0.14em] text-[#151319]/75" style={{ fontSize: "max(10px, 2.8cqw)" }}>
             <span>RSP-001</span>
             <span>2026 · T-120</span>
           </div>
@@ -23,7 +23,7 @@ export default function PharviaCassette({ className = "" }: { className?: string
             <span className="text-[#0B3A5C]">PHAR</span>
             <span className="text-[#12B79A]">VIA</span>
           </p>
-          <p className="font-tape font-bold tracking-[0.14em] text-[#0B3A5C] whitespace-nowrap" style={{ fontSize: "max(7.5px, 2.6cqw)" }}>
+          <p className="font-tape font-bold tracking-[0.14em] text-[#0B3A5C] whitespace-nowrap" style={{ fontSize: "max(10px, 2.6cqw)" }}>
             SCAN · RETURN · TRACE
           </p>
         </div>

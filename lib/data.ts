@@ -72,6 +72,53 @@ export const projects: Project[] = [
     featured: true,
   },
   {
+    id: "amanin",
+    slug: "amanin",
+    archiveId: "RSP-005",
+    title: "AMANIN",
+    category: "AI & Cybersecurity",
+    year: "2026",
+    description:
+      "AI Anti-Scam Decision Assistant: konsep dan prototipe untuk memeriksa chat, tautan, screenshot, dan QR sebelum percaya, klik, atau bayar.",
+    longDesc:
+      "AMANIN adalah konsep platform keamanan digital yang membantu pengguna menilai risiko penipuan sebelum bertindak lewat alur Receive, Share, Check, Decide. Hasilnya berupa skor risiko 0–100, alasan, dan rekomendasi tindakan, sebagai indikasi awal dan bukan jaminan keamanan.",
+    problem:
+      "Pesan, tautan, dan QR palsu sering sampai ke pengguna tepat saat mereka harus memutuskan, sementara cara memverifikasinya tidak jelas.",
+    solution:
+      "Satu alur pemeriksaan yang menjelaskan indikator risiko dan menyarankan langkah aman sebelum pengguna bertindak.",
+    features: ["Chat Scam Check", "QR Scam Check", "Screenshot Scanner", "Scam Risk Score", "Smart Recommendation", "Cyber Education"],
+    tech: [],
+    tags: ["AI", "Cybersecurity", "Digital Innovation"],
+    role: "CEO",
+    team: "Halte Terminal Rawamangun · 3 members",
+    accent: "#38D5F3",
+    liveUrl: "https://mobile-webpage-amanin.vercel.app/",
+    featured: true,
+  },
+  {
+    id: "pasarakar",
+    slug: "pasarakar",
+    archiveId: "RSP-006",
+    title: "PASARAKAR",
+    category: "Agritech · Digital Innovation",
+    year: "2026",
+    description:
+      "Konsep super-app agritech offline-first untuk prediksi harga, penjualan panen kolektif, marketplace B2B, logistik, dan akses pembiayaan lewat BUMDes dan koperasi desa.",
+    longDesc:
+      "PasarAkar adalah konsep bisnis dan prototipe desain untuk membantu petani desa mengakses informasi harga, pasar, dan modal secara lebih setara. Proyek ini meraih Juara 1 dan Presentasi Terbaik di NACOPS 7.0 2026.",
+    problem:
+      "Petani sering menjual dengan harga yang ditentukan tengkulak karena minim informasi harga, posisi tawar, dan akses pembeli maupun pembiayaan.",
+    solution:
+      "Satu ekosistem offline-first yang menyatukan informasi harga, agregasi panen kolektif, marketplace B2B, logistik desa, dan konsep akses pembiayaan.",
+    features: ["AgroPrice AI", "KolektifOrder", "PasarKomoditas", "LogisDesa", "AkarKredit", "Offline Mode"],
+    tech: [],
+    tags: ["Agritech", "BUMDes", "Digital Innovation"],
+    role: "CFO",
+    team: "KAMI AKAN MENANG · 3 members",
+    accent: "#D9A441",
+    featured: true,
+  },
+  {
     id: "daging-people-hris",
     slug: "daging-people-hris",
     archiveId: "RSP-002",
@@ -96,9 +143,6 @@ export const projects: Project[] = [
       "Dashboard analitik kehadiran real-time",
     ],
     tech: ["Next.js", "React", "TypeScript", "MongoDB", "Prisma", "Tailwind CSS"],
-    image: "/images/project-hris.jpg",
-    color: "from-[#0f2544] to-[#1e3a7a]",
-    type: "proyek",
     role: "Full-Stack Developer",
     team: "Solo Project",
   },
@@ -126,9 +170,6 @@ export const projects: Project[] = [
       "Role-based access (Admin, Operator, Viewer)",
     ],
     tech: ["Next.js", "Express.js", "MongoDB", "TypeScript", "Tailwind CSS"],
-    image: "/images/project-costtrack.jpg",
-    color: "from-slate-800 to-slate-600",
-    type: "proyek",
     role: "Full-Stack Developer & Project Manager",
     team: "Tim 4 orang",
   },
@@ -156,9 +197,6 @@ export const projects: Project[] = [
       "Autentikasi JWT",
     ],
     tech: ["React", "TypeScript", "Vite", "FastAPI", "Python", "SQLite"],
-    image: "/images/project-task.jpg",
-    color: "from-indigo-900 to-indigo-700",
-    type: "proyek",
     role: "Full-Stack Developer",
     team: "Solo Project",
   },
@@ -251,6 +289,17 @@ export const skills = [
   { name: "SAP ERP", category: "Tools" },
   { name: "Jira", category: "Tools" },
   { name: "Notion", category: "Tools" },
+];
+
+
+// ─── COMPETENCIES ───────────────────────────────────
+
+export const competencies = [
+  { id: "product", name: "Digital Product Development", note: "Dari riset masalah, konsep, hingga prototipe yang dapat dicoba.", projects: ["pharvia", "amanin"] },
+  { id: "uiux", name: "UI/UX Design", note: "Alur dan antarmuka mobile untuk pengguna awam.", projects: ["pharvia", "amanin"] },
+  { id: "analysis", name: "System & Business Analysis", note: "Persona, SWOT/TOWS, analisis pasar, risiko, dan model bisnis.", projects: ["amanin", "pharvia"] },
+  { id: "cyber", name: "Cybersecurity Product Concepts", note: "Konsep pencegahan penipuan berbasis skor risiko dan edukasi.", projects: ["amanin"] },
+  { id: "ai", name: "AI-Assisted Product Design", note: "Merancang produk dengan asisten keputusan berbasis AI sebagai konsep.", projects: ["amanin"] },
 ];
 
 // ─── EXPERIENCES ──────────────────────────────────────────────────────────────
@@ -365,11 +414,16 @@ export const awards: Award[] = [
     product: "PasarAkar",
     desc: "Meraih Juara 1 dan Best Presentation di kompetisi nasional bertema \"Inovasi Bisnis Bertumpu pada Sumber Daya Daerah\". Sebagai CFO bersama Tristan Khayru Abiyudha (CEO) dan Harbima Razan Adhitya (CTO), memimpin pemodelan keuangan, valuasi, dan unit economics untuk PasarAkar — agritech super-app offline-first yang mengintegrasikan BUMDes, prediksi harga AI, dan micro-financing untuk petani desa.",
     photos: [
-      { src: "/nacops/1787846487256.jpg", caption: "Sertifikat Best Presentation" },
-      { src: "/nacops/1787846572889.jpg", caption: "Sertifikat Juara 1" },
-      { src: "/nacops/1787847181738.jpg", caption: "Foto Tim" },
-      { src: "/nacops/1787847182488.jpg", caption: "Foto Penghargaan" },
+      { src: "/projects/pasarakar/achievements/award-photo-trophy-medal-certificates.jpg", caption: "Foto penghargaan: piala, medali, dan sertifikat" },
+      { src: "/projects/pasarakar/team/team-celebration.jpg", caption: "Foto tim KAMI AKAN MENANG" },
+      { src: "/projects/pasarakar/achievements/certificate-juara-1.jpg", caption: "Sertifikat Juara 1" },
+      { src: "/projects/pasarakar/achievements/certificate-presentasi-terbaik.jpg", caption: "Sertifikat Presentasi Terbaik" },
     ],
+    projectSlug: "pasarakar",
+    organizer: "Pertemanan Sejiwa",
+    eventDates: "28 Juni 2026",
+    certificateNo: "VI/PS/ESEPS/2026/9",
+    recipient: "Rizky Sandi Pratama",
   },
   {
     id: "award-4",
@@ -459,52 +513,16 @@ export const awards: Award[] = [
 ];
 
 // ─── FEATURED WORK (homepage preview) ────────────────────────────────────────
+// No longer used directly; FeaturedTapes reads `projects.slice(0,3)`.
+// Kept as a named export for backwards compatibility in case other pages import it.
 
-export const featuredWork = [
-  {
-    id: "fw-1",
-    title: "DagingPeople HRIS",
-    slug: "daging-people-hris",
-    category: "Full-Stack · Sistem HR",
-    description:
-      "Sistem manajemen SDM untuk jaringan toko daging: absensi GPS/NFC, shift, cuti, penggajian, dan ekspor bank.",
-    image: "/images/project-hris.jpg",
-    color: "from-[#0f2544] to-[#1e3a7a]",
-    tech: ["Next.js", "TypeScript", "MongoDB"],
-  },
-  {
-    id: "fw-2",
-    title: "CostTrack",
-    slug: "costtrack",
-    category: "Capstone · Best Project",
-    description:
-      "Kalkulasi Harga Perkiraan Estimasi (HPE) dengan integrasi kurs JISDOR Bank Indonesia dan dukungan multi-mata uang.",
-    image: "/images/project-costtrack.jpg",
-    color: "from-slate-800 to-slate-600",
-    tech: ["Next.js", "Express.js", "MongoDB"],
-  },
-  {
-    id: "fw-3",
-    title: "TaskTracker",
-    slug: "tasktracker",
-    category: "React · TypeScript",
-    description:
-      "Manajemen tugas dengan status, deadline, prioritas, dan statistik — dibangun dengan React + TypeScript dan FastAPI.",
-    image: "/images/project-task.jpg",
-    color: "from-indigo-900 to-indigo-700",
-    tech: ["React", "TypeScript", "FastAPI"],
-  },
-];
-
-// ─── TESTIMONIALS (kept for reference) ───────────────────────────────────────
-
-export const testimonials = [
-  {
-    id: "t1",
-    quote:
-      "Rizky adalah developer yang responsif, detail, dan sangat memahami kebutuhan bisnis. Hasil kerjanya sangat rapi dan berkualitas tinggi.",
-    name: "Nama Klien A",
-    role: "Founder / Perusahaan",
-    avatar: "/images/avatar-placeholder.jpg",
-  },
-];
+export const featuredWork = projects.slice(0, 3).map((p) => ({
+  id: p.id,
+  title: p.title,
+  slug: p.slug,
+  category: p.category,
+  description: p.description,
+  image: p.cover ?? "",
+  color: "",
+  tech: p.tech.length ? p.tech : p.tags ?? [],
+}));

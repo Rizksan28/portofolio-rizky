@@ -2,7 +2,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import Link from "next/link";
-import { projects, techStack } from "@/lib/data";
+import { competencies, projects, techStack } from "@/lib/data";
 import PageHero from "@/components/layout/PageHero";
 
 const catColors: Record<string, string> = {
@@ -114,6 +114,32 @@ export default function SkillsPageComponent() {
           })}
         </div>
         <p className="max-w-6xl mx-auto px-6 mt-8 font-tape text-[11px] text-[#B8ADB4]">LED columns map to the {projects.length} tapes in the archive: lit means the tool was used on that tape. IN KIT means it is part of the toolset but not on a featured tape.</p>
+      </section>
+
+      <section className="bg-[#151319] py-16 md:py-24" aria-labelledby="competencies-title">
+        <div className="max-w-6xl mx-auto px-6">
+          <p className="font-tape text-[11px] font-bold tracking-[0.22em] text-[#F5BA60] mb-2">COMPETENCIES ON TAPE</p>
+          <h2 id="competencies-title" className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[0.98] text-[#F1E5D0] mb-3">WHERE THE SKILLS SHOW UP.</h2>
+          <p className="text-[16px] leading-relaxed text-[#D6CDD2] max-w-2xl mb-10">Each competency links to the tapes that demonstrate it. These are product and design competencies, separate from the tool list above.</p>
+          <ul className="grid gap-4 md:grid-cols-2">
+            {competencies.map((c) => (
+              <li key={c.id} className="border border-white/20 bg-[#1b1720] p-5">
+                <h3 className="font-display text-[18px] text-[#F1E5D0] mb-1">{c.name}</h3>
+                <p className="text-[14px] leading-relaxed text-[#D6CDD2] mb-4">{c.note}</p>
+                <div className="flex flex-wrap gap-2">
+                  {c.projects.map((slug) => {
+                    const p = projects.find((x) => x.slug === slug);
+                    return p ? (
+                      <Link key={slug} href={`/projects/${slug}`} className="font-tape text-[11px] font-bold tracking-[0.1em] px-2.5 py-1 border border-[#F5BA60]/60 text-[#F5BA60] hover:bg-[#F5BA60] hover:text-[#151319] transition-colors">
+                        ▶ {p.archiveId} {p.title}
+                      </Link>
+                    ) : null;
+                  })}
+                </div>
+              </li>
+            ))}
+          </ul>
+        </div>
       </section>
     </>
   );

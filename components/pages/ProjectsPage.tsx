@@ -36,6 +36,7 @@ export default function ProjectsPage() {
   }, [search, tech]);
 
   const pick = projects[0];
+  const byId = [...projects].sort((a, b) => a.archiveId.localeCompare(b.archiveId));
 
   return (
     <>
@@ -52,7 +53,7 @@ export default function ProjectsPage() {
           <span className="masking-tape absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-6" aria-hidden="true" />
           <p className="text-[10px] font-bold tracking-[0.22em] text-[#151319]/70 mb-1">RSP VIDEO RENTAL</p>
           <p className="font-display text-xl text-[#151319] mb-3">RENTAL CARD</p>
-          {projects.map((p) => (
+          {byId.map((p) => (
             <Link key={p.id} href={`/projects/${p.slug}`} className="flex items-baseline justify-between gap-3 py-2 border-b border-dashed border-[#151319]/40 text-[12px] text-[#151319] hover:bg-[#151319]/[0.07] px-1">
               <span className="font-bold shrink-0">{p.archiveId}</span>
               <span className="truncate flex-1">{p.title}</span>

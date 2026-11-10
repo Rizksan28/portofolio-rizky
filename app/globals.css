@@ -286,3 +286,8 @@ h1, h2, h3, h4, h5, h6 {
 }
 .crop-marks::before { top: 0; left: 0; border-width: 1px 0 0 1px; }
 .crop-marks::after { bottom: 0; right: 0; border-width: 0 1px 1px 0; }
+
+@keyframes tape-load {
+  from { width: 0%; }
+  to { width: 100%; }
+}
