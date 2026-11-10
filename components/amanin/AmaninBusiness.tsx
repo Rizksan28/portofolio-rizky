@@ -153,6 +153,73 @@ export function Team() {
   );
 }
 
+export function Achievement() {
+  const [open, setOpen] = useState<number | null>(null);
+  const close = useCallback(() => setOpen(null), []);
+  const { award } = amanin;
+  const images = [
+    { src: award.teamPhoto.src, alt: `Rizky Sandi Pratama, Vassell Enha Atthayya, and Evan Octavianus Haryo Handoko holding their 2nd place certificates for ${award.event}`, caption: "Tim Halte Terminal Rawamangun dengan sertifikat Juara 2", width: award.teamPhoto.width, height: award.teamPhoto.height },
+    { src: award.webinarPhoto.src, alt: `Online award ceremony webinar for ${award.event}, showing team Halte Terminal Rawamangun from Telkom University Jakarta`, caption: "Sesi webinar RISE 2026", width: award.webinarPhoto.width, height: award.webinarPhoto.height },
+  ];
+  const rows = [
+    ["RESULT", award.result],
+    ["EVENT", award.event],
+    ["THEME", award.theme],
+    ["ORGANIZER", award.organizer],
+    ["DATES", award.dates],
+    ["CERTIFICATE NO.", award.certificateNo],
+    ["RECIPIENT", award.recipient],
+  ];
+
+  return (
+    <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
+      <div>
+        <SubHead label="HALL OF FAME ENTRY" color={cyan} title={award.title} />
+        <p className="font-tape text-[13px] leading-relaxed -mt-4 mb-10 max-w-2xl" style={{ color: cyan }}>{award.subtitle}</p>
+
+        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-start">
+          <div className="space-y-4">
+            {images.map((img, i) => (
+              <motion.button
+                key={img.src}
+                {...reveal}
+                onClick={() => setOpen(i)}
+                aria-label={`Open ${img.caption} full size`}
+                className="group relative block w-full border border-white/15 bg-[#0b1220]"
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" className="w-full h-auto block" />
+                <span className="absolute right-3 bottom-3 flex items-center gap-2 bg-[#0a1424]/90 border border-white/30 px-3 py-2 font-tape text-[11px] font-bold tracking-[0.14em] text-[#F1E5D0] group-hover:border-[#38D5F3]">
+                  <Maximize2 size={14} aria-hidden="true" /> VIEW FULL SIZE
+                </span>
+              </motion.button>
+            ))}
+          </div>
+
+          <div>
+            <div className="inline-flex items-center gap-3 font-display text-[#04202a] bg-[#38D5F3] px-4 py-2 mb-6">
+              <span className="text-[28px] leading-none">2ND</span>
+              <span className="font-tape text-[11px] font-bold tracking-[0.16em]">PLACE · RISE 2026</span>
+            </div>
+            <dl className="bg-[#0d1626] border border-white/15 p-6 font-tape">
+              {rows.map(([k, v]) => (
+                <div key={k} className="py-2.5 border-b border-dashed border-white/15 last:border-0">
+                  <dt className="text-[10px] tracking-[0.2em] text-[#B8ADB4]">{k}</dt>
+                  <dd className="text-[14px] font-semibold mt-0.5 text-[#F1E5D0]">{v}</dd>
+                </div>
+              ))}
+            </dl>
+            <Link href={`/achievements/${award.slug}`} className="inline-flex items-center gap-2 mt-6 bg-[#F1E5D0] hover:bg-[#38D5F3] text-[#151319] font-tape text-[12px] font-bold tracking-[0.12em] px-5 py-3.5 transition-colors">
+              VIEW ACHIEVEMENT RECORD <ArrowUpRight size={14} aria-hidden="true" />
+            </Link>
+          </div>
+        </div>
+      </div>
+      <Lightbox items={images} index={open} onClose={close} onIndex={setOpen} />
+    </div>
+  );
+}
+
 export function Future() {
   const { future } = amanin;
   return (

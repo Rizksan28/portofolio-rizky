@@ -510,6 +510,28 @@ export const awards: Award[] = [
       { src: "/iofest/1760527871624.jpg", caption: "Award Presentation" },
     ],
   },
+  {
+    id: "award-9",
+    slug: "rise-2026-hipmi-upn-jatim",
+    place: "2nd",
+    label: "Juara 2",
+    title: "Business Proposal Competition – RISE 2026",
+    issuer: "UKM HIPMI PT UPN \"Veteran\" Jawa Timur",
+    date: "Oct 2026",
+    role: "Chief Executive Officer (CEO)",
+    team: "Halte Terminal Rawamangun",
+    product: "AMANIN",
+    desc: "Meraih Juara 2 di Business Proposal Competition RISE 2026 bertema \"From Vision to Venture: Membangun Bisnis yang Inovatif dan Berkelanjutan\". Sebagai CEO bersama Vassell Enha Atthayya (CFO) dan Evan Octavianus Haryo Handoko (CTO), memimpin penyusunan proposal bisnis dan strategi untuk AMANIN — AI Anti-Scam Decision Assistant yang membantu masyarakat mendeteksi risiko penipuan digital sebelum bertindak.",
+    photos: [
+      { src: "/projects/amanin/achievement/team-photo-juara-2-rise-2026.jpg", caption: "Tim Halte Terminal Rawamangun dengan sertifikat Juara 2" },
+      { src: "/projects/amanin/achievement/webinar-rise-2026.jpg", caption: "Sesi webinar RISE 2026 bersama tim Halte Terminal Rawamangun" },
+    ],
+    projectSlug: "amanin",
+    organizer: "UKM HIPMI PT UPN \"Veteran\" Jawa Timur",
+    eventDates: "17 September – 11 Oktober 2026",
+    certificateNo: "571/RISE/HIPMIPTUPN/X/2026",
+    recipient: "Rizky Sandi Pratama",
+  },
 ];
 
 // ─── FEATURED WORK (homepage preview) ────────────────────────────────────────

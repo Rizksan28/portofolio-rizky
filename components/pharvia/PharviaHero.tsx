@@ -94,7 +94,7 @@ export default function PharviaHero({ onPlay }: { onPlay: () => void }) {
               </div>
             </CRTMonitor>
             <div className="relative mt-8 mx-auto w-[82%] max-w-[420px] rotate-[-4deg] md:absolute md:-bottom-2 md:-left-10 md:mt-0 md:w-[60%] md:max-w-none md:rotate-[-7deg] z-20">
-              <PharviaCassette />
+              <PharviaCassette interactive={false} />
             </div>
           </div>
         </div>

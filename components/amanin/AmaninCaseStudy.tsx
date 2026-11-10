@@ -4,7 +4,7 @@ import ProjectDetailNav, { scrollToSection } from "@/components/layout/ProjectDe
 import { ChapterHead } from "@/components/pharvia/Narrative";
 import { Idea, Solution, Threat } from "@/components/amanin/AmaninNarrative";
 import { Experience, Features, Gallery, Personas } from "@/components/amanin/AmaninShowcase";
-import { BusinessModel, Future, LiveDemo, NextTape, Team } from "@/components/amanin/AmaninBusiness";
+import { Achievement, BusinessModel, Future, LiveDemo, NextTape, Team } from "@/components/amanin/AmaninBusiness";
 import { amanin } from "@/lib/amanin";
 
 const chapters = [
@@ -12,7 +12,8 @@ const chapters = [
   { id: "features", n: "02", label: "FEATURES" },
   { id: "business", n: "03", label: "BUSINESS" },
   { id: "team", n: "04", label: "TEAM" },
-  { id: "live", n: "05", label: "LIVE" },
+  { id: "award", n: "05", label: "AWARD" },
+  { id: "live", n: "06", label: "LIVE" },
 ];
 
 const { cyan, blue, amber, green } = amanin.colors;
@@ -56,9 +57,16 @@ export default function AmaninCaseStudy() {
         </div>
       </section>
 
+      <section id="award" className="scroll-mt-36 bg-[#0b1220] py-20 md:py-28">
+        <div className="max-w-6xl mx-auto px-6">
+          <ChapterHead n="05" label="AWARD" color={cyan} title="RECOGNIZED BY THE JUDGES." />
+          <Achievement />
+        </div>
+      </section>
+
       <section id="live" className="scroll-mt-36 bg-[#0d1626] border-y border-white/[0.06] py-20 md:py-28">
         <div className="max-w-6xl mx-auto px-6">
-          <ChapterHead n="05" label="LIVE" color={green} title="WHAT IS NEXT, AND TRY IT." />
+          <ChapterHead n="06" label="LIVE" color={green} title="WHAT IS NEXT, AND TRY IT." />
           <Future />
           <LiveDemo />
         </div>

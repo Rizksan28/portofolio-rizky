@@ -81,7 +81,7 @@ export default function VHSTape({
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
         {custom ? (
-          slug === "amanin" ? <AmaninCassette /> : slug === "pasarakar" ? <PasarAkarCassette /> : <PharviaCassette className="group-hover:shadow-[0_0_0_1px_rgba(43,212,180,0.7),0_0_30px_rgba(43,212,180,0.35)] transition-shadow" />
+          slug === "amanin" ? <AmaninCassette /> : slug === "pasarakar" ? <PasarAkarCassette /> : <PharviaCassette />
         ) : (
         <div className="relative aspect-[188/104] rounded-[10px] bg-gradient-to-b from-[#26222b] to-[#14111a] shadow-[0_18px_30px_-12px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-2px_0_rgba(0,0,0,0.6)] border border-black">
           <div className="absolute inset-x-3 top-1 h-[3px] rounded-full bg-black/50" />

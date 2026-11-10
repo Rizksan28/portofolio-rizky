@@ -371,6 +371,21 @@ export const amanin = {
     note: "Foto dan peran diambil dari BMC dan presentasi tim. Kontribusi teknis per anggota tidak dirinci di sini.",
   },
 
+  award: {
+    slug: "rise-2026-hipmi-upn-jatim",
+    title: "AN AWARD-WINNING PROPOSAL.",
+    subtitle: "2nd Place — Business Proposal Competition, RISE 2026 (HIPMI PT UPN \"Veteran\" Jawa Timur).",
+    result: "Juara 2 — Business Proposal Competition",
+    event: "RISE 2026",
+    theme: "From Vision to Venture: Membangun Bisnis yang Inovatif dan Berkelanjutan",
+    organizer: "UKM HIPMI PT UPN \"Veteran\" Jawa Timur",
+    dates: "17 September – 11 Oktober 2026",
+    certificateNo: "571/RISE/HIPMIPTUPN/X/2026",
+    recipient: "Rizky Sandi Pratama",
+    teamPhoto: { src: `${base}/achievement/team-photo-juara-2-rise-2026.jpg`, width: 1280, height: 720 },
+    webinarPhoto: { src: `${base}/achievement/webinar-rise-2026.jpg`, width: 1400, height: 970 },
+  },
+
   future: {
     implemented: [
       "Prototipe web yang dapat dicoba untuk pemeriksaan chat, tautan, screenshot, dan QR",
