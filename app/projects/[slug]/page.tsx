@@ -10,7 +10,7 @@ interface Props {
 }
 
 export async function generateStaticParams() {
-  return projects.filter((p) => !["pharvia", "amanin", "pasarakar"].includes(p.slug)).map((p) => ({ slug: p.slug }));
+  return projects.filter((p) => !["pharvia", "amanin", "pasarakar", "astraloka"].includes(p.slug)).map((p) => ({ slug: p.slug }));
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {

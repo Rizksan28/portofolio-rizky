@@ -8,6 +8,7 @@ const plex = IBM_Plex_Mono({ weight: ["400", "500", "600", "700"], subsets: ["la
 const inter = Inter({ subsets: ["latin"], variable: "--font-inter", display: "swap" });
 
 export const metadata: Metadata = {
+  metadataBase: new URL(process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000"),
   title: "RSP — The Analog VHS Archive | Rizky Sandi Pratama",
   description:
     "A fictional 1990s analog video archive. The portfolio of Rizky Sandi Pratama — Full-Stack Developer & UI/UX Enthusiast.",
@@ -25,8 +26,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="id" className={`h-full antialiased ${archivo.variable} ${plex.variable} ${inter.variable}`}>
-      <body className="min-h-full flex flex-col bg-[#151319] text-[#F1E5D0]">
+    <html lang="id" suppressHydrationWarning className={`h-full antialiased ${archivo.variable} ${plex.variable} ${inter.variable}`}>
+      <body className="min-h-full flex flex-col bg-[var(--bg-primary)] text-[var(--warm-paper)]">
         <a href="#main" className="skip-link">Skip to content</a>
         <Providers>{children}</Providers>
         <div className="crt-overlay" aria-hidden="true" />

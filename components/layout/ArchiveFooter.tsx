@@ -1,6 +1,7 @@
 "use client";
-import { ArrowUp, Mail, Globe, RotateCcw } from "lucide-react";
+import { ArrowUp, Download, Mail, Globe, RotateCcw } from "lucide-react";
 import Link from "next/link";
+import { CV_URL } from "@/lib/data";
 
 const links = [
   { label: "Home", href: "/" },
@@ -16,30 +17,32 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
   const scrollTop = () => window.scrollTo({ top: 0, behavior: "smooth" });
 
   return (
-    <footer className="bg-[#0d0b10] relative overflow-hidden">
+    <footer className="relative overflow-hidden" style={{ background: "var(--bg-deep)" }}>
       <div className="vhs-stripe" />
 
       <div className="max-w-6xl mx-auto px-6 pt-16 pb-8">
         {!compact && (
           <div className="grid gap-12 md:grid-cols-[1.2fr_0.8fr] items-center mb-14">
             <div>
-              <p className="font-tape text-[11px] font-bold tracking-[0.25em] text-[#B8ADB4] uppercase mb-4">
+              <p className="font-tape text-[11px] font-bold tracking-[0.25em] uppercase mb-4" style={{ color: "var(--muted-text)" }}>
                 &mdash; Record a message
               </p>
-              <h2 className="text-[clamp(2rem,4.6vw,3.6rem)] leading-[0.98] text-[#F1E5D0]">
+              <h2 className="text-[clamp(2rem,4.6vw,3.6rem)] leading-[0.98]" style={{ color: "var(--warm-paper)" }}>
                 LET&apos;S MAKE<br />SOMETHING WORTH<br />
                 <span className="text-[#FF718E]">REPLAYING.</span>
               </h2>
               <div className="mt-7 flex flex-wrap gap-3">
                 <a
                   href="mailto:rizkysandipratama28@gmail.com"
-                  className="flex items-center gap-2 bg-[#F1E5D0] hover:bg-[#FF718E] text-[#151319] hover:text-white font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  className="flex items-center gap-2 hover:bg-[#FF718E] hover:text-white font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  style={{ background: "var(--warm-paper)", color: "var(--bg-primary)" }}
                 >
                   <Mail size={14} /> SEND EMAIL
                 </a>
                 <Link
                   href="/contact"
-                  className="flex items-center gap-2 border border-[#F1E5D0]/30 hover:border-[#F5BA60] text-[#F1E5D0] font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  className="flex items-center gap-2 hover:border-[#F5BA60] font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  style={{ border: "1px solid var(--border-subtle)", color: "var(--warm-paper)" }}
                 >
                   RECORD A MESSAGE
                 </Link>
@@ -47,9 +50,17 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
                   href="https://linkedin.com/in/rizksan"
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="flex items-center gap-2 border border-[#F1E5D0]/30 hover:border-[#F5BA60] text-[#F1E5D0] font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  className="flex items-center gap-2 hover:border-[#F5BA60] font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                  style={{ border: "1px solid var(--border-subtle)", color: "var(--warm-paper)" }}
                 >
                   <Globe size={14} /> LINKEDIN
+                </a>
+                <a
+                  href={CV_URL}
+                  download
+                  className="flex items-center gap-2 border border-[#F5BA60]/50 hover:border-[#F5BA60] text-[#F5BA60] font-tape text-[12px] font-bold tracking-wider px-5 py-3 rounded-md transition-colors"
+                >
+                  <Download size={14} /> DOWNLOAD CV
                 </a>
               </div>
             </div>
@@ -76,15 +87,15 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
           </div>
         )}
 
-        <div className="border-t border-white/[0.08] pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="border-t pt-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4" style={{ borderColor: "var(--border-subtle)" }}>
           <div>
             <div className="flex items-center gap-3 mb-1.5">
-              <div className="w-7 h-7 bg-[#F1E5D0] rounded-[4px] flex items-center justify-center">
-                <span className="text-[#151319] text-[10px] font-black tracking-tighter">RSP</span>
+              <div className="w-7 h-7 rounded-[4px] flex items-center justify-center" style={{ background: "var(--warm-paper)" }}>
+                <span className="text-[10px] font-black tracking-tighter" style={{ color: "var(--bg-primary)" }}>RSP</span>
               </div>
-              <span className="font-tape text-[11px] font-medium text-[#B8ADB4] tracking-wider">THE ANALOG VHS ARCHIVE</span>
+              <span className="font-tape text-[11px] font-medium tracking-wider" style={{ color: "var(--muted-text)" }}>THE ANALOG VHS ARCHIVE</span>
             </div>
-            <p className="font-tape text-[11px] text-[#B8ADB4]/75 tracking-wide">
+            <p className="font-tape text-[11px] tracking-wide" style={{ color: "var(--muted-text)", opacity: 0.75 }}>
               &copy; 2026 RIZKY SANDI PRATAMA &middot; INFORMATION SYSTEMS &middot; TELKOM UNIVERSITY JAKARTA
             </p>
           </div>
@@ -92,7 +103,7 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
           <div className="flex items-center gap-4">
             <nav aria-label="Footer" className="hidden md:flex flex-wrap gap-4">
               {links.map((l) => (
-                <Link key={l.href} href={l.href} className="font-tape text-[11px] text-[#B8ADB4] hover:text-[#F1E5D0] transition-colors tracking-wider uppercase">
+                <Link key={l.href} href={l.href} className="font-tape text-[11px] hover:text-[var(--warm-paper)] transition-colors tracking-wider uppercase" style={{ color: "var(--muted-text)" }}>
                   {l.label}
                 </Link>
               ))}
@@ -100,9 +111,10 @@ export default function ArchiveFooter({ compact = false }: { compact?: boolean }
             <button
               onClick={scrollTop}
               aria-label="Back to top"
-              className="w-9 h-9 bg-white/[0.04] hover:bg-[#FF718E] border border-white/[0.12] rounded-md flex items-center justify-center transition-colors group"
+              className="w-9 h-9 hover:bg-[#FF718E] rounded-md flex items-center justify-center transition-colors group"
+              style={{ background: "rgba(255,255,255,0.04)", border: "1px solid var(--border-subtle)" }}
             >
-              <ArrowUp size={14} className="text-[#B8ADB4] group-hover:text-white" />
+              <ArrowUp size={14} className="group-hover:text-white" style={{ color: "var(--muted-text)" }} />
             </button>
           </div>
         </div>

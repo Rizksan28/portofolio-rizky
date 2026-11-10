@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import AmaninCassette from "@/components/amanin/AmaninCassette";
+import AstraLokaCassette from "@/components/astraloka/AstraLokaCassette";
 import PasarAkarCassette from "@/components/pasarakar/PasarAkarCassette";
 import PharviaCassette from "@/components/pharvia/PharviaCassette";
 
@@ -44,7 +45,7 @@ export default function VHSTape({
   const color = accentColor || defaultColors[slug.charCodeAt(0) % defaultColors.length];
   const router = useRouter();
   const [loading, setLoading] = useState(false);
-  const custom = slug === "amanin" || slug === "pharvia" || slug === "pasarakar";
+  const custom = slug === "amanin" || slug === "pharvia" || slug === "pasarakar" || slug === "astraloka";
   const leftWound = 13 + (slug.length % 4);
   const rightWound = 30 - leftWound;
   const navTimer = useRef<ReturnType<typeof setTimeout> | null>(null);
@@ -95,7 +96,7 @@ export default function VHSTape({
         transition={{ type: "spring", stiffness: 260, damping: 20 }}
       >
         {custom ? (
-          slug === "amanin" ? <AmaninCassette /> : slug === "pasarakar" ? <PasarAkarCassette /> : <PharviaCassette />
+          slug === "amanin" ? <AmaninCassette /> : slug === "pasarakar" ? <PasarAkarCassette /> : slug === "astraloka" ? <AstraLokaCassette /> : <PharviaCassette />
         ) : (
         <div className="relative aspect-[188/104] rounded-[10px] bg-gradient-to-b from-[#26222b] to-[#14111a] shadow-[0_18px_30px_-12px_rgba(0,0,0,0.9),inset_0_1px_0_rgba(255,255,255,0.08),inset_0_-2px_0_rgba(0,0,0,0.6)] border border-black">
           <div className="absolute inset-x-3 top-1 h-[3px] rounded-full bg-black/50" />

@@ -4,6 +4,36 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Menu, X } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLang, type Lang } from "@/lib/i18n";
+import ThemeToggle from "@/components/ui/ThemeToggle";
+
+function LangToggle({ className = "" }: { className?: string }) {
+  const { lang, setLang } = useLang();
+  return (
+    <div
+      role="group"
+      aria-label="Language"
+      className={cn("flex items-center rounded-md overflow-hidden", className)}
+      style={{ border: "1px solid var(--border-subtle)" }}
+    >
+      {(["id", "en"] as Lang[]).map((l) => (
+        <button
+          key={l}
+          onClick={() => setLang(l)}
+          aria-pressed={lang === l}
+          className={cn(
+            "px-2.5 py-1.5 font-tape text-[10px] font-bold tracking-[0.12em] transition-colors",
+            lang === l
+              ? "bg-[var(--warm-paper)] text-[var(--bg-primary)]"
+              : "text-[var(--muted-text)] hover:text-[var(--warm-paper)]",
+          )}
+        >
+          {l.toUpperCase()}
+        </button>
+      ))}
+    </div>
+  );
+}
 
 const links = [
   { label: "HOME", href: "/" },
@@ -41,25 +71,29 @@ export default function ArchiveNavbar() {
       <header className="fixed top-1 left-0 right-0 z-50 px-4 pt-2">
         <nav
           aria-label="Primary"
+          style={{
+            background: scrolled ? "var(--navbar-scrolled)" : "var(--navbar-idle)",
+            border: "1px solid var(--border-subtle)",
+          }}
           className={cn(
             "max-w-6xl mx-auto rounded-xl px-4 py-2.5 flex items-center justify-between transition-all duration-300",
             scrolled
-              ? "bg-[#151319]/95 backdrop-blur-md shadow-lg shadow-black/40 border border-white/[0.06]"
-              : "bg-[#151319]/70 backdrop-blur-sm border border-white/[0.03]",
+              ? "backdrop-blur-md shadow-lg shadow-black/40"
+              : "backdrop-blur-sm",
           )}
         >
           {/* Logo */}
           <Link href="/" className="flex items-center gap-2.5 group">
-            <div className="w-8 h-8 bg-[#F1E5D0] rounded-md flex items-center justify-center group-hover:bg-[#FF718E] transition-colors duration-200">
-              <span className="text-[#151319] text-[10px] font-black tracking-tighter leading-none">
+            <div className="w-8 h-8 rounded-md flex items-center justify-center group-hover:bg-[#FF718E] transition-colors duration-200" style={{ background: "var(--warm-paper)" }}>
+              <span className="text-[10px] font-black tracking-tighter leading-none" style={{ color: "var(--bg-primary)" }}>
                 RSP
               </span>
             </div>
             <div className="hidden sm:flex flex-col">
-              <span className="font-tape text-[10px] font-bold text-[#F1E5D0]/80 tracking-wider leading-none">
+              <span className="font-tape text-[10px] font-bold tracking-wider leading-none" style={{ color: "var(--warm-paper)", opacity: 0.8 }}>
                 ARCHIVE
               </span>
-              <span className="font-tape text-[10px] text-[#B8ADB4]/75 tracking-[0.2em] leading-none mt-0.5">
+              <span className="font-tape text-[10px] tracking-[0.2em] leading-none mt-0.5" style={{ color: "var(--muted-text)", opacity: 0.75 }}>
                 EST. 2023
               </span>
             </div>
@@ -79,7 +113,7 @@ export default function ArchiveNavbar() {
                       "relative px-3 py-2 rounded-md font-tape text-[11px] font-semibold tracking-[0.1em] transition-all duration-200",
                       isActive
                         ? "text-[#FF718E] bg-[#FF718E]/[0.12]"
-                        : "text-[#D6CDD2] hover:text-[#F1E5D0] hover:bg-white/[0.06]",
+                        : "text-[var(--text-secondary)] hover:text-[var(--warm-paper)] hover:bg-white/[0.06]",
                     )}
                   >
                     {l.label}
@@ -100,9 +134,12 @@ export default function ArchiveNavbar() {
                 REC
               </span>
             </div>
+            <ThemeToggle />
+            <LangToggle />
             <Link
               href="/contact"
-              className="font-tape text-[11px] font-bold tracking-[0.1em] text-[#151319] bg-[#F1E5D0] hover:bg-[#FF718E] hover:text-white px-4 py-2 rounded-md transition-all duration-200"
+              className="font-tape text-[11px] font-bold tracking-[0.1em] px-4 py-2 rounded-md transition-all duration-200 hover:bg-[#FF718E] hover:text-white"
+              style={{ background: "var(--warm-paper)", color: "var(--bg-primary)" }}
             >
               CONTACT
             </Link>
@@ -117,16 +154,16 @@ export default function ArchiveNavbar() {
             aria-controls="mobile-menu"
           >
             {open ? (
-              <X size={18} className="text-[#F1E5D0]" />
+              <X size={18} style={{ color: "var(--warm-paper)" }} />
             ) : (
-              <Menu size={18} className="text-[#F1E5D0]" />
+              <Menu size={18} style={{ color: "var(--warm-paper)" }} />
             )}
           </button>
         </nav>
 
         {/* Mobile menu */}
         {open && (
-          <div id="mobile-menu" className="absolute top-[56px] left-4 right-4 mt-2 bg-[#1a1720] rounded-xl shadow-2xl shadow-black/60 border border-white/[0.06] p-2 lg:hidden">
+          <div id="mobile-menu" className="absolute top-[56px] left-4 right-4 mt-2 rounded-xl shadow-2xl shadow-black/60 p-2 lg:hidden" style={{ background: "var(--mobile-menu-bg)", border: "1px solid var(--border-subtle)" }}>
             {links.map((l) => {
               const isActive =
                 pathname === l.href || (l.href !== "/" && pathname.startsWith(l.href));
@@ -139,17 +176,22 @@ export default function ArchiveNavbar() {
                     "flex items-center px-4 py-3.5 font-tape text-[12px] font-semibold tracking-[0.1em] rounded-lg transition",
                     isActive
                       ? "text-[#FF718E] bg-[#FF718E]/[0.08]"
-                      : "text-[#F1E5D0] hover:bg-white/[0.04]",
+                      : "text-[var(--warm-paper)] hover:bg-white/[0.04]",
                   )}
                 >
                   {l.label}
                 </Link>
               );
             })}
-            <div className="h-px bg-white/[0.06] my-1" />
+            <div className="h-px my-1" style={{ background: "var(--border-subtle)" }} />
+            <div className="flex items-center justify-between px-4 py-2.5">
+              <span className="font-tape text-[11px] font-semibold tracking-[0.12em]" style={{ color: "var(--muted-text)" }}>LANGUAGE</span>
+              <LangToggle />
+            </div>
             <Link
               href="/contact"
-              className="flex items-center justify-center px-4 py-2.5 font-tape text-[11px] font-bold tracking-[0.1em] text-[#151319] bg-[#F1E5D0] rounded-lg hover:bg-[#FF718E] hover:text-white transition"
+              className="flex items-center justify-center px-4 py-2.5 font-tape text-[11px] font-bold tracking-[0.1em] rounded-lg hover:bg-[#FF718E] hover:text-white transition"
+              style={{ background: "var(--warm-paper)", color: "var(--bg-primary)" }}
             >
               RECORD A MESSAGE
             </Link>

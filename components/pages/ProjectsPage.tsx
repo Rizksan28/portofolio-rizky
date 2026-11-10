@@ -13,7 +13,8 @@ type ViewMode = "shelf" | "catalog";
 const tapeColors = ["#FF718E", "#B18BF7", "#6FC6BE", "#F5BA60"];
 const tilts = [-1.6, 1.1, -0.7, 1.4];
 const topicsOf = (p: (typeof projects)[number]) => [...p.tech, ...(p.tags ?? [])];
-const allTech = Array.from(new Set(projects.flatMap(topicsOf))).sort();
+const shownProjects = projects.filter((p) => p.featured);
+const allTech = Array.from(new Set(shownProjects.flatMap(topicsOf))).sort();
 const accentOf = (p: (typeof projects)[number], i: number) => p.accent ?? tapeColors[i % tapeColors.length];
 
 export default function ProjectsPage() {
@@ -23,7 +24,7 @@ export default function ProjectsPage() {
 
   const filtered = useMemo(() => {
     const q = search.trim().toLowerCase();
-    return projects.filter((p) => {
+    return shownProjects.filter((p) => {
       const matchTech = !tech || topicsOf(p).includes(tech);
       const matchQ =
         !q ||
@@ -35,15 +36,15 @@ export default function ProjectsPage() {
     });
   }, [search, tech]);
 
-  const pick = projects[0];
-  const byId = [...projects].sort((a, b) => a.archiveId.localeCompare(b.archiveId));
+  const pick = shownProjects[0];
+  const byId = [...shownProjects].sort((a, b) => a.archiveId.localeCompare(b.archiveId));
 
   return (
     <>
       <PageHero
         channel="CH-03"
         room="Video Rental · Aisle 03"
-        kicker={`Now showing · ${projects.length} tapes`}
+        kicker={`Now showing · ${shownProjects.length} tapes`}
         accent="#FF718E"
         timecode="00:03:00"
         title={<>THE PROJECT<br /><span className="text-[#FF718E]">ARCHIVE.</span></>}
@@ -160,7 +161,7 @@ export default function ProjectsPage() {
             ))}
           </div>
           <p className="font-tape text-[11px] text-[#B8ADB4] tracking-wider mt-5" aria-live="polite">
-            {filtered.length} / {projects.length} TAPES ON THE SHELF
+            {filtered.length} / {shownProjects.length} TAPES ON THE SHELF
           </p>
         </div>
       </section>

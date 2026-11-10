@@ -1,3 +1,6 @@
+// Place the actual PDF at public/cv/Rizky-Sandi-Pratama-CV.pdf
+export const CV_URL = "/cv/Rizky-Sandi-Pratama-CV.pdf";
+
 export interface Project {
   id: string;
   slug: string;
@@ -116,6 +119,36 @@ export const projects: Project[] = [
     role: "CFO",
     team: "KAMI AKAN MENANG · 3 members",
     accent: "#D9A441",
+    featured: true,
+  },
+  {
+    id: "astraloka",
+    slug: "astraloka",
+    archiveId: "RSP-007",
+    title: "ASTRALOKA",
+    category: "Travel-Tech · Eco-Cultural",
+    year: "2026",
+    description:
+      "Smart Eco-Cultural Travel Planner berbasis AI yang menghubungkan wisatawan dengan destinasi budaya, UMKM lokal, dan komunitas — sambil mengukur dampak perjalanan terhadap ekonomi lokal dan lingkungan.",
+    longDesc:
+      "AstraLoka adalah platform smart eco-travel planner yang membantu wisatawan menemukan destinasi budaya, menyusun perjalanan personal, terhubung dengan pelaku lokal, dan mengukur dampak perjalanannya. Meraih Juara 2 di kompetisi nasional BMC Diponegoro Economics Project 2026 (Agustus 2026). Platform mendorong pemerataan kunjungan sekaligus memperkuat ekonomi komunitas melalui model Hybrid Multi-sided Marketplace B2C·B2B·B2G.",
+    problem:
+      "15 juta kunjungan wisatawan menumpuk di Bali selatan, 20% belanja wisata bocor ke produk impor, dan 6.016 desa wisata belum terekspos merata — sementara data monitoring destinasi masih terfragmentasi.",
+    solution:
+      "Satu ekosistem eco-travel yang menyatukan Smart Itinerary AI, Cultural Map, Local Marketplace UMKM, Eco-Quest gamification, dan Impact Tracker dalam satu platform berkelanjutan.",
+    features: [
+      "Smart Itinerary — rute personal sesuai minat, waktu, anggaran, dan jejak karbon",
+      "Cultural Concierge — rekomendasi budaya, cerita lokal, dan etika berkunjung",
+      "Cultural Map — peta interaktif destinasi populer dan hidden gem",
+      "Local Marketplace — workshop, pemandu, kuliner, dan produk UMKM terkurasi",
+      "Eco-Quest — misi wisata bertanggung jawab dengan poin dan penghargaan",
+      "Impact Tracker — mengukur kontribusi ekonomi lokal dan dampak lingkungan",
+    ],
+    tech: [],
+    tags: ["Travel-Tech", "AI", "Eco-Tourism", "Sustainability"],
+    role: "CFO & Business Strategist",
+    team: "Jembatan Bellingham x Halland · 3 members",
+    accent: "#2D8B5A",
     featured: true,
   },
   {

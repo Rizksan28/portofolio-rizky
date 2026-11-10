@@ -7,6 +7,7 @@ import { projects } from "@/lib/data";
 const colors = ["#FF718E", "#B18BF7", "#6FC6BE"];
 
 export default function FeaturedTapes() {
+  const featured = projects.filter((p) => p.featured);
   return (
     <section className="relative py-20 md:py-28 bg-[#151319]">
       <div className="max-w-6xl mx-auto px-6 mb-12">
@@ -26,8 +27,8 @@ export default function FeaturedTapes() {
       </div>
 
       <div className="max-w-6xl mx-auto px-6">
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-y-12">
-          {projects.slice(0, 3).map((p, i) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-y-12">
+          {featured.map((p, i) => (
             <motion.div key={p.id} className="px-4 pt-6" initial={{ opacity: 0, y: 30 }} whileInView={{ opacity: 1, y: 0 }} viewport={{ once: true }} transition={{ delay: i * 0.1, duration: 0.5 }}>
               <VHSTape
                 slug={p.slug}
@@ -37,7 +38,7 @@ export default function FeaturedTapes() {
                 year={p.year}
                 tech={p.tech.length ? p.tech : p.tags}
                 accentColor={p.accent ?? colors[i % colors.length]}
-                tilt={[-1.4, 1, -0.6][i % 3]}
+                tilt={[-1.4, 1, -0.6, 0.8][i % 4]}
               />
               <div className="shelf-plank -mx-4 mt-6" aria-hidden="true" />
             </motion.div>

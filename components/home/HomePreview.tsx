@@ -2,6 +2,7 @@
 import { motion } from "framer-motion";
 import Link from "next/link";
 import { awards, experiences, techStack } from "@/lib/data";
+import { useT } from "@/lib/i18n";
 import FilmStrip from "@/components/analog/FilmStrip";
 import Polaroid from "@/components/analog/Polaroid";
 
@@ -21,9 +22,9 @@ function Heading({ kicker, title, color, href, cta }: { kicker: string; title: s
     <div className="flex flex-wrap items-end justify-between gap-4 mb-10">
       <div>
         <p className="font-tape text-[11px] font-bold tracking-[0.22em] mb-2" style={{ color }}>{kicker}</p>
-        <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[0.98] text-[#F1E5D0]">{title}</h2>
+        <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[0.98]" style={{ color: "var(--warm-paper)" }}>{title}</h2>
       </div>
-      <Link href={href} className="font-tape text-[12px] font-bold tracking-[0.1em] text-[#F1E5D0] border-b border-[#F1E5D0]/50 hover:text-[#F5BA60] hover:border-[#F5BA60] pb-0.5 transition-colors">
+      <Link href={href} className="font-tape text-[12px] font-bold tracking-[0.1em] hover:text-[#F5BA60] hover:border-[#F5BA60] pb-0.5 transition-colors" style={{ color: "var(--warm-paper)", borderBottom: "1px solid var(--warm-paper)", opacity: 0.9 }}>
         {cta} &rarr;
       </Link>
     </div>
@@ -31,17 +32,21 @@ function Heading({ kicker, title, color, href, cta }: { kicker: string; title: s
 }
 
 export default function HomePreview() {
+  const t = useT();
   const photos = awards.slice(0, 3).map((a) => ({ a, photo: a.photos?.[0] }));
 
   return (
     <>
-      <section className="bg-[#0d0b10] border-y border-white/[0.06] py-20 md:py-28">
+      <section className="border-y py-20 md:py-28" style={{ background: "var(--bg-deep)", borderColor: "var(--border-subtle)" }}>
         <motion.div {...reveal} className="max-w-6xl mx-auto px-6 grid gap-12 md:grid-cols-[1fr_1fr] items-center">
           <div>
             <p className="font-tape text-[11px] font-bold tracking-[0.22em] text-[#B18BF7] mb-2">BEHIND THE TAPE</p>
-            <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[0.98] text-[#F1E5D0] mb-5">THE CREATOR.</h2>
-            <p className="text-[17px] leading-[1.75] text-[#D6CDD2] mb-6 max-w-md">
-              Mahasiswa Sistem Informasi Telkom University Jakarta semester 7 dengan minat kuat di pengembangan produk digital, UI/UX, dan manajemen proyek.
+            <h2 className="text-[clamp(1.8rem,3.6vw,2.8rem)] leading-[0.98] mb-5" style={{ color: "var(--warm-paper)" }}>THE CREATOR.</h2>
+            <p className="text-[17px] leading-[1.75] mb-6 max-w-md" style={{ color: "var(--text-secondary)" }}>
+              {t({
+                id: "Mahasiswa Sistem Informasi Telkom University Jakarta semester 7 dengan minat kuat di pengembangan produk digital, UI/UX, dan manajemen proyek.",
+                en: "A 7th-semester Information Systems student at Telkom University Jakarta with a strong interest in digital product development, UI/UX, and project management.",
+              })}
             </p>
             <Link href="/about" className="font-tape text-[12px] font-bold tracking-[0.1em] text-[#B18BF7] hover:text-[#F5BA60] transition-colors">READ THE FULL STORY &rarr;</Link>
           </div>
@@ -63,15 +68,15 @@ export default function HomePreview() {
         </motion.div>
       </section>
 
-      <section className="bg-[#151319] py-20 md:py-28">
+      <section className="py-20 md:py-28" style={{ background: "var(--bg-primary)" }}>
         <motion.div {...reveal} className="max-w-6xl mx-auto px-6">
           <Heading kicker="ON RECORD" title="CAREER TIMELINE." color="#6FC6BE" href="/experience" cta="VIEW FULL RECORD" />
           <FilmStrip frames={frames} accent="#6FC6BE" />
           <ul className="mt-8 grid gap-3 md:grid-cols-3">
             {experiences.slice(0, 3).map((e) => (
-              <li key={e.id} className="border-l-4 border-[#6FC6BE] bg-[#1b1720] px-4 py-3">
-                <p className="text-[15px] font-semibold text-[#F1E5D0] leading-snug">{e.title}</p>
-                <p className="font-tape text-[12px] text-[#B8ADB4] mt-1">{e.org}</p>
+              <li key={e.id} className="border-l-4 border-[#6FC6BE] px-4 py-3" style={{ background: "var(--bg-secondary)" }}>
+                <p className="text-[15px] font-semibold leading-snug" style={{ color: "var(--warm-paper)" }}>{e.title}</p>
+                <p className="font-tape text-[12px] mt-1" style={{ color: "var(--muted-text)" }}>{e.org}</p>
                 <p className="font-tape text-[11px] text-[#6FC6BE] mt-1">{e.period.split("·")[0].trim()}</p>
               </li>
             ))}
@@ -79,12 +84,12 @@ export default function HomePreview() {
         </motion.div>
       </section>
 
-      <section className="bg-[#0d0b10] border-y border-white/[0.06] py-20 md:py-28">
+      <section className="border-y py-20 md:py-28" style={{ background: "var(--bg-deep)", borderColor: "var(--border-subtle)" }}>
         <motion.div {...reveal} className="max-w-6xl mx-auto px-6">
           <Heading kicker="EQUIPMENT" title="TECH STACK." color="#F5BA60" href="/skills" cta="ENTER EQUIPMENT ROOM" />
-          <div className="grid gap-px bg-black border border-black sm:grid-cols-2 lg:grid-cols-4 shadow-[0_24px_40px_-16px_rgba(0,0,0,0.95)]">
+          <div className="grid gap-px sm:grid-cols-2 lg:grid-cols-4 shadow-[0_24px_40px_-16px_rgba(0,0,0,0.95)]" style={{ background: "var(--bg-deep)", border: "1px solid var(--bg-deep)" }}>
             {techStack.map((cat, i) => (
-              <div key={cat.category} className="bg-gradient-to-b from-[#221e27] to-[#17141b] p-5">
+              <div key={cat.category} className="p-5" style={{ background: "var(--bg-secondary)" }}>
                 <div className="flex items-center justify-between mb-4">
                   <p className="font-tape text-[11px] font-bold tracking-[0.18em]" style={{ color: rackColors[i] }}>{cat.category.toUpperCase()}</p>
                   <span className="flex gap-1" aria-hidden="true">
@@ -95,7 +100,7 @@ export default function HomePreview() {
                 </div>
                 <ul className="space-y-1.5">
                   {cat.items.map((item) => (
-                    <li key={item} className="font-tape text-[13px] text-[#F1E5D0]/90 flex items-center gap-2">
+                    <li key={item} className="font-tape text-[13px] flex items-center gap-2" style={{ color: "var(--warm-paper)", opacity: 0.9 }}>
                       <span className="w-1.5 h-1.5 rounded-full" style={{ background: rackColors[i] }} aria-hidden="true" />{item}
                     </li>
                   ))}
@@ -106,14 +111,14 @@ export default function HomePreview() {
         </motion.div>
       </section>
 
-      <section className="bg-[#151319] py-20 md:py-28">
+      <section className="py-20 md:py-28" style={{ background: "var(--bg-primary)" }}>
         <motion.div {...reveal} className="max-w-6xl mx-auto px-6">
           <Heading kicker="HALL OF FAME" title="SELECTED AWARDS." color="#FF718E" href="/achievements" cta="VIEW ALL AWARDS" />
           <div className="grid gap-x-8 gap-y-12 md:grid-cols-3">
             {photos.map(({ a, photo }, i) => (
               <Link key={a.id} href={`/achievements/${a.slug}`} className="group block">
                 <Polaroid src={photo?.src} alt={photo?.caption ?? a.title} caption={`${a.label} · ${a.date}`} rotate={[-2, 1.2, -1][i]} aspect="aspect-[4/3]" />
-                <p className="text-[16px] font-semibold text-[#F1E5D0] group-hover:text-[#F5BA60] transition-colors mt-5 leading-snug">{a.title}</p>
+                <p className="text-[16px] font-semibold group-hover:text-[#F5BA60] transition-colors mt-5 leading-snug" style={{ color: "var(--warm-paper)" }}>{a.title}</p>
               </Link>
             ))}
           </div>

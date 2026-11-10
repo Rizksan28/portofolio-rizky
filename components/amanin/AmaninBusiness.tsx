@@ -4,6 +4,7 @@ import { AnimatePresence, motion } from "framer-motion";
 import Link from "next/link";
 import { ArrowUpRight, ChevronDown, Maximize2 } from "lucide-react";
 import Lightbox from "@/components/pharvia/Lightbox";
+import Polaroid from "@/components/analog/Polaroid";
 import { SubHead } from "@/components/amanin/AmaninNarrative";
 import VHSTape from "@/components/analog/VHSTape";
 import { amanin } from "@/lib/amanin";
@@ -130,14 +131,12 @@ export function Team() {
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-center">
-          <motion.figure {...reveal} className="paper relative p-3 pb-4 rotate-[-1.4deg] shadow-[0_24px_40px_-16px_rgba(0,0,0,0.95)]">
-            <span className="masking-tape absolute -top-3 left-1/2 -translate-x-1/2 w-20 h-6" aria-hidden="true" />
-            {/* eslint-disable-next-line @next/next/no-img-element */}
-            <img src={amanin.assets.team.src} alt="Portraits of Rizky Sandi Pratama (CEO), Vassell Enha Atthayya (CFO) and Evan Octavianus Haryo Handoko (CTO)" width={amanin.assets.team.width} height={amanin.assets.team.height} loading="lazy" className="w-full h-auto block" />
-            <figcaption className="mt-3 font-tape text-[11px] font-semibold text-[#151319]/80">Team portraits from the AMANIN Business Model Canvas.</figcaption>
-          </motion.figure>
+        <div className="grid gap-12 lg:grid-cols-[1.2fr_0.8fr] items-center">
+          <motion.div {...reveal}>
+            <Polaroid src={amanin.assets.team.src} alt="Portraits of Rizky Sandi Pratama (CEO), Vassell Enha Atthayya (CFO) and Evan Octavianus Haryo Handoko (CTO)" caption="Team Halte Terminal Rawamangun — AMANIN BMC." rotate={-1.6} aspect="aspect-[534/251]" />
+          </motion.div>
           <div>
+            <p className="font-display text-[22px] text-[#F1E5D0] mb-6">{team.name}</p>
             <ul className="space-y-3">
               {team.members.map((m, i) => (
                 <li key={m.name} className="flex items-center gap-4 bg-[#0b1220] border border-white/15 p-4">
@@ -175,44 +174,45 @@ export function Achievement() {
   return (
     <div className="mt-16 md:mt-24 [&:nth-child(2)]:mt-0">
       <div>
-        <SubHead label="HALL OF FAME ENTRY" color={cyan} title={award.title} />
-        <p className="font-tape text-[13px] leading-relaxed -mt-4 mb-10 max-w-2xl" style={{ color: cyan }}>{award.subtitle}</p>
+        <p className="font-display text-[clamp(1.1rem,2.2vw,1.5rem)] leading-snug text-[#F5BA60] mb-12 max-w-2xl">{award.subtitle}</p>
 
-        <div className="grid gap-12 lg:grid-cols-[1.1fr_0.9fr] items-start">
-          <div className="space-y-4">
-            {images.map((img, i) => (
-              <motion.button
-                key={img.src}
-                {...reveal}
-                onClick={() => setOpen(i)}
-                aria-label={`Open ${img.caption} full size`}
-                className="group relative block w-full border border-white/15 bg-[#0b1220]"
-              >
+        <div className="grid gap-12 lg:grid-cols-[1.15fr_0.85fr] items-start">
+          <motion.div initial={{ opacity: 0, scale: 0.94, rotate: -3 }} whileInView={{ opacity: 1, scale: 1, rotate: -1 }} viewport={{ once: true, margin: "-80px" }} transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}>
+            <div className="relative p-3 md:p-4 bg-gradient-to-br from-[#F5BA60] via-[#c98d2e] to-[#F5BA60] shadow-[0_30px_50px_-20px_rgba(0,0,0,0.95)]">
+              <button onClick={() => setOpen(0)} aria-label="Open the team photo full size" className="group relative block w-full bg-[#0b1220]">
                 {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={img.src} alt={img.alt} width={img.width} height={img.height} loading="lazy" className="w-full h-auto block" />
-                <span className="absolute right-3 bottom-3 flex items-center gap-2 bg-[#0a1424]/90 border border-white/30 px-3 py-2 font-tape text-[11px] font-bold tracking-[0.14em] text-[#F1E5D0] group-hover:border-[#38D5F3]">
+                <img src={award.teamPhoto.src} alt={images[0].alt} width={award.teamPhoto.width} height={award.teamPhoto.height} loading="lazy" className="w-full h-auto block" />
+                <span className="absolute inset-0 pointer-events-none bg-[repeating-linear-gradient(0deg,rgba(0,0,0,0.1)_0,rgba(0,0,0,0.1)_1px,transparent_1px,transparent_3px)]" aria-hidden="true" />
+                <span className="absolute right-3 bottom-3 flex items-center gap-2 bg-[#0a1424]/90 border border-white/30 px-3 py-2 font-tape text-[11px] font-bold tracking-[0.14em] text-[#F1E5D0] group-hover:border-[#F5BA60]">
                   <Maximize2 size={14} aria-hidden="true" /> VIEW FULL SIZE
                 </span>
-              </motion.button>
-            ))}
-          </div>
+              </button>
+              <span className="masking-tape absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-6 rotate-[-2deg]" aria-hidden="true" />
+            </div>
+            <p className="font-tape text-[12px] text-[#B8ADB4] mt-4">Tim Halte Terminal Rawamangun dengan sertifikat Juara 2.</p>
+          </motion.div>
 
           <div>
             <div className="inline-flex items-center gap-3 font-display text-[#04202a] bg-[#38D5F3] px-4 py-2 mb-6">
               <span className="text-[28px] leading-none">2ND</span>
               <span className="font-tape text-[11px] font-bold tracking-[0.16em]">PLACE · RISE 2026</span>
             </div>
-            <dl className="bg-[#0d1626] border border-white/15 p-6 font-tape">
+            <dl className="paper p-6 rotate-[0.8deg] shadow-[0_22px_40px_-16px_rgba(0,0,0,0.9)] font-tape">
               {rows.map(([k, v]) => (
-                <div key={k} className="py-2.5 border-b border-dashed border-white/15 last:border-0">
-                  <dt className="text-[10px] tracking-[0.2em] text-[#B8ADB4]">{k}</dt>
-                  <dd className="text-[14px] font-semibold mt-0.5 text-[#F1E5D0]">{v}</dd>
+                <div key={k} className="py-2.5 border-b border-dashed border-[#151319]/35 last:border-0">
+                  <dt className="text-[10px] tracking-[0.2em] text-[#151319]/65">{k}</dt>
+                  <dd className="text-[14px] font-semibold mt-0.5">{v}</dd>
                 </div>
               ))}
             </dl>
-            <Link href={`/achievements/${award.slug}`} className="inline-flex items-center gap-2 mt-6 bg-[#F1E5D0] hover:bg-[#38D5F3] text-[#151319] font-tape text-[12px] font-bold tracking-[0.12em] px-5 py-3.5 transition-colors">
-              VIEW ACHIEVEMENT RECORD <ArrowUpRight size={14} aria-hidden="true" />
-            </Link>
+            <div className="flex flex-wrap gap-3 mt-6">
+              <Link href={`/achievements/${award.slug}`} className="inline-flex items-center gap-2 bg-[#F1E5D0] hover:bg-[#38D5F3] text-[#151319] font-tape text-[12px] font-bold tracking-[0.12em] px-5 py-3.5 transition-colors">
+                VIEW ACHIEVEMENT RECORD <ArrowUpRight size={14} aria-hidden="true" />
+              </Link>
+              <button onClick={() => setOpen(1)} className="inline-flex items-center gap-2 border border-[#F1E5D0]/40 hover:border-[#38D5F3] hover:text-[#38D5F3] text-[#F1E5D0] font-tape text-[12px] font-bold tracking-[0.12em] px-5 py-3.5 transition-colors">
+                WEBINAR PHOTO
+              </button>
+            </div>
           </div>
         </div>
       </div>

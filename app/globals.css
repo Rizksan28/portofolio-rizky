@@ -4,13 +4,36 @@
   --bg-primary: #151319;
   --bg-secondary: #211C24;
   --bg-tertiary: #2A2430;
+  --bg-deep: #0d0b10;
   --warm-paper: #F1E5D0;
+  --text-secondary: #D6CDD2;
   --tape-pink: #FF718E;
   --analog-violet: #B18BF7;
   --muted-teal: #6FC6BE;
   --archive-amber: #F5BA60;
   --muted-text: #B8ADB4;
   --border-subtle: rgba(255, 255, 255, 0.06);
+  --navbar-idle: rgba(21, 19, 25, 0.70);
+  --navbar-scrolled: rgba(21, 19, 25, 0.95);
+  --mobile-menu-bg: #1a1720;
+}
+
+[data-theme="light"] {
+  --bg-primary: #F5EDD8;
+  --bg-secondary: #EDE0C4;
+  --bg-tertiary: #E6D8BE;
+  --bg-deep: #DDD0B0;
+  --warm-paper: #1A1520;
+  --text-secondary: #3D3245;
+  --tape-pink: #D42B50;
+  --analog-violet: #6B40D8;
+  --muted-teal: #2A8E86;
+  --archive-amber: #B87A0A;
+  --muted-text: #6B5A6E;
+  --border-subtle: rgba(26, 21, 32, 0.10);
+  --navbar-idle: rgba(245, 237, 216, 0.75);
+  --navbar-scrolled: rgba(237, 224, 196, 0.97);
+  --mobile-menu-bg: #E8D8BE;
 }
 
 @theme inline {
@@ -25,13 +48,13 @@
 html {
   scroll-behavior: smooth;
   scrollbar-width: thin;
-  scrollbar-color: #B18BF7 #151319;
+  scrollbar-color: var(--analog-violet) var(--bg-primary);
 }
 
 ::-webkit-scrollbar { width: 6px; }
-::-webkit-scrollbar-track { background: #151319; }
-::-webkit-scrollbar-thumb { background: #B18BF7; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #FF718E; }
+::-webkit-scrollbar-track { background: var(--bg-primary); }
+::-webkit-scrollbar-thumb { background: var(--analog-violet); border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: var(--tape-pink); }
 
 ::selection {
   background: #B18BF7;
@@ -44,6 +67,7 @@ body {
   font-family: var(--font-inter), "Inter", sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  transition: background-color 0.25s ease, color 0.25s ease;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -185,6 +209,21 @@ h1, h2, h3, h4, h5, h6 {
     #6FC6BE 85%, #6FC6BE 100%
   );
   height: 4px;
+}
+
+/* ── FORM FIELD (theme-aware) ─────────────────────────────────────── */
+.form-field {
+  background: var(--bg-deep);
+  border: 1px solid var(--border-subtle);
+  color: var(--warm-paper);
+  transition: border-color 0.15s, background-color 0.25s;
+}
+.form-field::placeholder {
+  color: var(--muted-text);
+  opacity: 0.65;
+}
+.form-field:focus {
+  border-color: var(--archive-amber);
 }
 
 /* ── LINE CLAMP ───────────────────────────────────────────────────── */

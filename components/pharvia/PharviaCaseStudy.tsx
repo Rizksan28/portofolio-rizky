@@ -23,10 +23,11 @@ const chapters = [
 
 export default function PharviaCaseStudy() {
   const [loading, setLoading] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
   }, []);
 
   const go = useCallback((id: string) => scrollToSection(id), []);
@@ -39,10 +40,15 @@ export default function PharviaCaseStudy() {
       return;
     }
     setLoading(true);
-    timer.current = setTimeout(() => {
-      go("story");
-      timer.current = setTimeout(() => setLoading(false), 350);
-    }, 900);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    timers.current.push(
+      setTimeout(() => {
+        go("story");
+        timers.current.push(setTimeout(() => setLoading(false), 350));
+      }, 900),
+      setTimeout(() => setLoading(false), 2400),
+    );
   }, [go, loading]);
 
   return (

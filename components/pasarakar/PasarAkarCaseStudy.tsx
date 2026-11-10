@@ -23,10 +23,11 @@ const chapters = [
 
 export default function PasarAkarCaseStudy() {
   const [loading, setLoading] = useState(false);
-  const timer = useRef<ReturnType<typeof setTimeout> | null>(null);
+  const timers = useRef<ReturnType<typeof setTimeout>[]>([]);
 
   useEffect(() => () => {
-    if (timer.current) clearTimeout(timer.current);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
   }, []);
 
   const play = useCallback(() => {
@@ -36,10 +37,15 @@ export default function PasarAkarCaseStudy() {
       return;
     }
     setLoading(true);
-    timer.current = setTimeout(() => {
-      scrollToSection("story");
-      timer.current = setTimeout(() => setLoading(false), 350);
-    }, 900);
+    timers.current.forEach(clearTimeout);
+    timers.current = [];
+    timers.current.push(
+      setTimeout(() => {
+        scrollToSection("story");
+        timers.current.push(setTimeout(() => setLoading(false), 350));
+      }, 900),
+      setTimeout(() => setLoading(false), 2400),
+    );
   }, [loading]);
 
   return (

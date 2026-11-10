@@ -1,7 +1,8 @@
 "use client";
 import { useState } from "react";
-import { Globe, Mail, MapPin, Send } from "lucide-react";
+import { FileDown, Globe, Mail, MapPin, Send } from "lucide-react";
 import PageHero from "@/components/layout/PageHero";
+import { CV_URL } from "@/lib/data";
 
 const EMAIL = "rizkysandipratama28@gmail.com";
 
@@ -30,8 +31,8 @@ export default function ContactPage() {
     setSubmitted(true);
   };
 
-  const field = "w-full bg-[#0d0b10] border border-white/25 px-4 py-3 font-tape text-[14px] text-[#F1E5D0] placeholder:text-[#B8ADB4]/70 focus:border-[#F5BA60] focus:outline-none transition-colors";
-  const label = "block font-tape text-[11px] font-bold tracking-[0.2em] text-[#F1E5D0] mb-2";
+  const field = "form-field w-full px-4 py-3 font-tape text-[14px] focus:outline-none";
+  const label = "block font-tape text-[11px] font-bold tracking-[0.2em] mb-2";
   const err = "font-tape text-[12px] text-[#FF8FA5] mt-1.5";
 
   return (
@@ -55,9 +56,9 @@ export default function ContactPage() {
         </div>
       </PageHero>
 
-      <section className="bg-[#0d0b10] border-y border-white/[0.06] py-16 md:py-24">
+      <section className="border-y py-16 md:py-24" style={{ background: "var(--bg-deep)", borderColor: "var(--border-subtle)" }}>
         <div className="max-w-6xl mx-auto px-6 grid gap-12 lg:grid-cols-[1.4fr_0.9fr]">
-          <div className="bg-[#17141b] border border-white/20 shadow-[0_24px_44px_-18px_rgba(0,0,0,0.95)]">
+          <div className="shadow-[0_24px_44px_-18px_rgba(0,0,0,0.95)]" style={{ background: "var(--bg-secondary)", border: "1px solid var(--border-subtle)" }}>
             <div className="flex items-center gap-3 px-6 py-3 border-b border-white/15 bg-black/30">
               <span className="w-2.5 h-2.5 rounded-full bg-[#FF718E] animate-glow-pulse" aria-hidden="true" />
               <span className="font-tape text-[11px] font-bold tracking-[0.2em] text-[#FF718E]">REC</span>
@@ -91,7 +92,7 @@ export default function ContactPage() {
                   <textarea id="msg" name="message" rows={6} value={form.message} onChange={(e) => setForm({ ...form, message: e.target.value })} aria-invalid={!!errors.message} aria-describedby={errors.message ? "msg-err" : undefined} placeholder="Tell me about your project..." className={`${field} resize-y`} />
                   {errors.message && <p id="msg-err" className={err}>{errors.message}</p>}
                 </div>
-                <button type="submit" className="w-full flex items-center justify-center gap-2 bg-[#F1E5D0] hover:bg-[#FF718E] text-[#151319] font-tape text-[13px] font-bold tracking-[0.12em] px-6 py-4 transition-colors">
+                <button type="submit" className="w-full flex items-center justify-center gap-2 hover:bg-[#FF718E] hover:text-white font-tape text-[13px] font-bold tracking-[0.12em] px-6 py-4 transition-colors" style={{ background: "var(--warm-paper)", color: "var(--bg-primary)" }}>
                   <Send size={15} /> RECORD MESSAGE
                 </button>
               </form>
@@ -105,6 +106,7 @@ export default function ContactPage() {
               {[
                 { icon: Mail, k: "EMAIL", v: EMAIL, href: `mailto:${EMAIL}` },
                 { icon: Globe, k: "LINKEDIN", v: "linkedin.com/in/rizksan", href: "https://linkedin.com/in/rizksan" },
+                { icon: FileDown, k: "CV / RESUME", v: "Download PDF", href: CV_URL },
                 { icon: MapPin, k: "LOCATION", v: "Jakarta, Indonesia" },
               ].map((c) => (
                 <div key={c.k} className="flex items-start gap-3 py-3 border-b border-dashed border-[#151319]/35 last:border-0">
